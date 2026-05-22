@@ -291,7 +291,7 @@ Last updated: [待确认]
    We may update these terms. Continued use constitutes acceptance.
 
 8. Governing Law
-   [待确认：适用法律 / 管辖地]
+   These Terms are governed by the laws of the State of California, United States, without regard to its conflict of law principles. Any disputes shall first be attempted to be resolved informally by contacting us. If informal resolution fails, disputes shall be resolved through binding arbitration conducted remotely via video conference.
 
 9. Contact
    [待确认：联系邮箱]
@@ -353,7 +353,7 @@ Last updated: [待确认]
 | # | 事项 | 影响 | 建议动作 |
 |---|---|---|---|
 | 1 | 站点运营主体（个人/公司）及联系邮箱 | Privacy Policy、Terms、Contact 页面必需 | 用户确认后填入 |
-| 2 | 适用法律 / 管辖地 | Terms of Service 必需 | 用户确认后填入 |
+| 2 | ~~适用法律 / 管辖地~~ | Terms of Service 必需 | **已确认：California 法律 + 在线仲裁** |
 | 3 | 是否使用分析工具（GA/Plausible/Cloudflare Analytics） | 数据处理表、Cookie Policy、GDPR 合规 | 若使用需补 Cookie Banner |
 | 4 | 是否使用 Cloudflare CDN | 第三方清单、跨境传输 | 确认后更新清单 |
 | 5 | 目标市场是否明确包含欧盟/英国 | GDPR 合规深度 | 若覆盖需补充 lawful basis 详细说明 |

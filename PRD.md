@@ -359,7 +359,7 @@ AP Score Tracker 自动可视化进步趋势并指出该复习哪里
 
 | 项目 | MVP 成本/月 | 说明 |
 |---|---|---|
-| Vercel | $0 | 静态站点，免费额度 |
+| Cloudflare Pages | $0 | 静态站点，免费额度 |
 | 域名 | ~$0.8 | $10/年 |
 | 无后端 | $0 | localStorage |
 | 无 AI API | $0 | 纯前端计算 |
@@ -387,7 +387,7 @@ AP Score Tracker 自动可视化进步趋势并指出该复习哪里
 | 样式 | Tailwind CSS + shadcn/ui | 快速 UI |
 | 图表 | Recharts | 进步曲线 + 热力图 |
 | 存储 | localStorage | 首版唯一存储 |
-| 部署 | Vercel | 自动 CI/CD |
+| 部署 | Cloudflare Pages | 自动 CI/CD |
 | 域名 | apscoretracker.com | 已注册 |
 
 ---
@@ -508,7 +508,7 @@ P0 功能：
   - JSON 导出/导入
   - 10 个 SEO landing 页面
 NOT-DO：登录、后端、PDF导出、AI、账号系统、跨设备同步
-部署：Vercel 静态导出（output: 'export'）
+部署：Cloudflare Pages 静态导出（output: 'export'）
 域名：apscoretracker.com（已注册）
 验收标准：
   1. 10 科目计算结果误差 ≤ 0.5 分

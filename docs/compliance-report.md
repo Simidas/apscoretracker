@@ -67,14 +67,14 @@ JSON 导出（用户主动下载备份文件）
 
 | 名称 | 用途 | 处理的数据类型 | 是否接触用户内容 | 是否跨境传输 | 模型训练 | 政策链接 |
 |---|---|---|---|---|---|---|
-| **Vercel** | 静态站点托管 | 访问日志（IP、UA、URL） | ❌ 不接触用户分数数据 | ⚠️ 美国 | 不适用 | [vercel.com/legal/privacy-policy](https://vercel.com/legal/privacy-policy) |
+| **Cloudflare Pages** | 静态站点托管 | 访问日志（IP、UA、URL） | ❌ 不接触用户分数数据 | ⚠️ 美国 | 不适用 | [cloudflare.com/privacypolicy](https://www.cloudflare.com/privacypolicy/) |
 | **Cloudflare** | CDN + DNS | 访问日志、IP | ❌ 不接触用户分数数据 | ⚠️ 全球节点 | 不适用 | [cloudflare.com/privacypolicy](https://www.cloudflare.com/privacypolicy/) |
 | **Plausible Analytics** | 隐私友好分析 | 匿名访问数据（无 Cookie） | ❌ | ✅ 欧盟（plausible.io 托管） | 不适用 | [plausible.io/privacy](https://plausible.io/privacy) |
 | **Namecheap** | 域名注册 | 注册信息 | ❌ | ⚠️ 美国 | 不适用 | [namecheap.com/privacy](https://www.namecheap.com/legal/general/privacy-policy/) |
 
 **注意：**
 - Plausible Analytics 不使用 Cookie，不收集个人数据，GDPR 下不需要 Cookie 同意横幅
-- 纯静态导出站点，Vercel 仅提供文件托管，不执行服务器端代码
+- 纯静态导出站点，Cloudflare Pages 提供文件托管，不执行服务器端代码
 - Cloudflare CDN 可能在全球节点缓存静态文件，不处理用户分数数据
 
 ---
@@ -114,7 +114,7 @@ JSON 导出（用户主动下载备份文件）
 |---|---|---|---|---|---|
 | AP 模考分数（MCQ/FRQ） | 计算 AP 分数、生成进步曲线 | [待确认：用户同意 / 合法利益] | 无（纯本地） | 永久（localStorage） | ✅ 可清除浏览器数据或应用内删除 |
 | 章节得分 Breakdown | 生成热力图、定位薄弱点 | [待确认] | 无 | 永久 | ✅ 同上 |
-| 访问日志（IP、UA） | 安全、防滥用、排错 | 合法利益 | Vercel / Cloudflare | 按服务商政策（通常 30 天） | ❌ 无法单独删除 |
+| 访问日志（IP、UA） | 安全、防滥用、排错 | 合法利益 | Cloudflare Pages / Cloudflare CDN | 按服务商政策（通常 30 天） | ❌ 无法单独删除 |
 | 分析数据 | 统计访问、优化页面 | 合法利益 | Plausible Analytics | 按 Plausible 配置 | ✅ 可通过浏览器设置退出 |
 
 **待确认项：**
@@ -239,17 +239,17 @@ Last updated: [待确认]
 3. Information We May Collect Automatically
    We use Plausible Analytics for privacy-friendly traffic analysis. Plausible does not use cookies and does not collect personal data. See https://plausible.io/privacy.
    
-   We also collect standard server logs via our hosting provider (Vercel) and CDN provider (Cloudflare), which may include: IP address, browser type, pages visited, visit duration.
+   We also collect standard server logs via our hosting provider (Cloudflare Pages) and CDN provider (Cloudflare), which may include: IP address, browser type, pages visited, visit duration.
 
 4. Third-Party Services
-   - Vercel: Hosting provider. May collect access logs. See https://vercel.com/legal/privacy-policy
-   - Cloudflare: CDN and DNS provider. May collect access logs. See https://www.cloudflare.com/privacypolicy/
+   - Cloudflare Pages: Hosting provider. May collect access logs. See https://www.cloudflare.com/privacypolicy/
+   - Cloudflare CDN: CDN and DNS provider. May collect access logs. See https://www.cloudflare.com/privacypolicy/
    - Plausible Analytics: Privacy-friendly analytics. No cookies, no personal data. See https://plausible.io/privacy
    - Namecheap: Domain registrar. See https://www.namecheap.com/legal/general/privacy-policy/
 
 5. Data Retention
    - Your practice test data: Stored in your browser's localStorage until you clear it.
-   - Server logs: Retained by Vercel per their policy (typically 30 days).
+   - Server logs: Retained by Cloudflare per their policy (typically 30 days).
 
 6. Your Rights
    - You can clear all your data at any time by using the "Clear All Data" button in the app or by clearing your browser's localStorage.

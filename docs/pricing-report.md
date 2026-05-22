@@ -25,8 +25,8 @@
 | 目标用户 | 美高学生、国际学校学生（14-18岁） |
 | 使用频率 | 低频工具（备考季每周 1-2 次，非备考季几乎不用） |
 | 差异化 | 唯一提供"多次模考进度曲线 + 知识点热力图"的 AP 工具 |
-| 技术栈 | Next.js 14 + Tailwind + Recharts + localStorage → Vercel |
-| 部署成本 | Vercel Hobby 免费档足够（静态导出） |
+| 技术栈 | Next.js 14 + Tailwind + Recharts + localStorage → Cloudflare Pages |
+| 部署成本 | Cloudflare Pages 免费档足够（静态导出） |
 
 ---
 
@@ -57,7 +57,7 @@ AP Score Tracker 是纯前端工具，**无 API 成本**。
 
 | 成本项 | 计费口径 | 低 | 中 | 高 | 备注 |
 |---|---|---:|---:|---:|---|
-| Vercel 托管 | 静态导出 | $0 | $0 | $20/月 | Hobby 免费档足够 |
+| Cloudflare Pages 托管 | 静态导出 | $0 | $0 | $20/月 | 免费档足够 |
 | 域名 | 年付 | $10/年 | $12/年 | $15/年 | Namecheap/Cloudflare |
 | CDN | Cloudflare | $0 | $0 | $0 | 免费档 |
 | 存储 | localStorage（客户端） | $0 | $0 | $0 | 无服务器存储 |
@@ -181,7 +181,7 @@ AP Score Tracker 是纯前端工具，**无 API 成本**。
 **场景 3：10000 MAU，2% 转化率**
 - 付费用户：200 人
 - 月收入：200 × $4.99 = $998
-- 月成本：$20（Vercel Pro）
+- 月成本：$20（Cloudflare Pages Pro，如需要）
 - 毛利率：98% ✅
 
 **结论：纯前端工具几乎没有成本压力，任何转化率都是正毛利。**

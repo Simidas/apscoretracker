@@ -46,7 +46,7 @@
 | 样式 | Tailwind CSS + shadcn/ui | 快速 UI，组件现成 |
 | 图表 | Recharts | 进步曲线 + 热力图 |
 | 存储 | localStorage | 首版唯一存储 |
-| 部署 | Vercel | 自动 CI/CD |
+| 部署 | Cloudflare Pages | 自动 CI/CD |
 | 域名 | apscoretracker.com | 已注册 |
 
 ---
@@ -111,7 +111,7 @@ interface ExamRecord {
 | Day 7 | 章节 breakdown + 热力图 |
 | Day 8 | 响应式优化 + 导出 JSON |
 | Day 9 | SEO 页面（10 个科目 landing）+ 博客页 |
-| Day 10 | 测试 + Vercel 部署 + 域名绑定 |
+|| Day 10 | 测试 + Cloudflare Pages 部署 + 域名绑定 |
 
 ---
 
@@ -119,7 +119,7 @@ interface ExamRecord {
 
 | 项目 | MVP 成本/月 | 优化手段 |
 |---|---|---|
-| Vercel Pro | $0（免费额度） | 静态站点，无 Serverless Function |
+| Cloudflare Pages | $0（免费额度） | 静态站点，无 Serverless Function |
 | 域名 | ~$10/年 | 已注册 |
 | 无后端 | $0 | 无数据库/API |
 | 无 AI API | $0 | 纯前端计算 |
@@ -145,6 +145,6 @@ interface ExamRecord {
 存储：localStorage 唯一存储，无后端
 P0：10 科目计算器 + 本地保存 + 进步曲线 + 热力图
 NOT-DO：登录、后端、PDF导出、AI、账号系统
-部署：Vercel 静态导出
+部署：Cloudflare Pages 静态导出
 验收：见上文 6 条标准
 ```

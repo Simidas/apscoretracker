@@ -67,14 +67,15 @@ JSON 导出（用户主动下载备份文件）
 
 | 名称 | 用途 | 处理的数据类型 | 是否接触用户内容 | 是否跨境传输 | 模型训练 | 政策链接 |
 |---|---|---|---|---|---|---|
-| **Vercel** | 静态站点托管 | 访问日志（IP、UA、URL） | ❌ 不接触用户分数数据 | [待确认] | 不适用 | [vercel.com/legal/privacy-policy](https://vercel.com/legal/privacy-policy) |
-| **Cloudflare** | CDN + DNS（如使用） | 访问日志、IP | ❌ 不接触用户分数数据 | [待确认] | 不适用 | [cloudflare.com/privacypolicy](https://www.cloudflare.com/privacypolicy/) |
-| **Google/Namecheap** | 域名注册 | 注册信息 | ❌ | [待确认] | 不适用 | [待确认] |
+| **Vercel** | 静态站点托管 | 访问日志（IP、UA、URL） | ❌ 不接触用户分数数据 | ⚠️ 美国 | 不适用 | [vercel.com/legal/privacy-policy](https://vercel.com/legal/privacy-policy) |
+| **Cloudflare** | CDN + DNS | 访问日志、IP | ❌ 不接触用户分数数据 | ⚠️ 全球节点 | 不适用 | [cloudflare.com/privacypolicy](https://www.cloudflare.com/privacypolicy/) |
+| **Plausible Analytics** | 隐私友好分析 | 匿名访问数据（无 Cookie） | ❌ | ✅ 欧盟（plausible.io 托管） | 不适用 | [plausible.io/privacy](https://plausible.io/privacy) |
+| **Namecheap** | 域名注册 | 注册信息 | ❌ | ⚠️ 美国 | 不适用 | [namecheap.com/privacy](https://www.namecheap.com/legal/general/privacy-policy/) |
 
 **注意：**
-- MVP 阶段无 Google Analytics、无广告像素、无追踪脚本
-- 若未来添加分析工具（如 Plausible/GA），需更新此清单并添加 Cookie 同意
+- Plausible Analytics 不使用 Cookie，不收集个人数据，GDPR 下不需要 Cookie 同意横幅
 - 纯静态导出站点，Vercel 仅提供文件托管，不执行服务器端代码
+- Cloudflare CDN 可能在全球节点缓存静态文件，不处理用户分数数据
 
 ---
 
@@ -83,12 +84,13 @@ JSON 导出（用户主动下载备份文件）
 | 地区 | 是否覆盖 | 法律义务 | 当前合规状态 |
 |---|---|---|---|
 | **美国（全局）** | ✅ 是 | COPPA（儿童隐私）、CCPA（加州） | COPPA：目标用户 14-18 岁，不收集 13 岁以下数据 ✅ |
-| **欧盟/英国** | ⚠️ 可能 | GDPR、ePrivacy/Cookie | 无追踪脚本，无 Cookie 同意需求 ✅；若未来加 GA 需补 Cookie Banner |
-| **加州（CCPA）** | ⚠️ 可能 | 隐私权披露、opt-out | 不"出售"个人数据，无广告像素 ✅ |
+| **欧盟/英国** | ✅ 是 | GDPR、ePrivacy/Cookie | Plausible 无 Cookie，无需 Cookie Banner ✅；已补充 GDPR 权利说明 ✅ |
+| **加州（CCPA）** | ✅ 是 | 隐私权披露、opt-out | 不"出售"个人数据，无广告像素 ✅；已补充 CCPA 权利说明 ✅ |
 
 **关键判断：**
-- 当前无追踪、无广告、无第三方 Cookie，GDPR Cookie 同意要求**不适用**
-- 若未来添加分析工具，必须补 Cookie Banner（欧盟/英国）
+- Plausible Analytics 不使用 Cookie，不收集个人数据，GDPR 下**不需要 Cookie 同意横幅**
+- Cloudflare CDN 仅缓存静态文件，不处理用户分数数据
+- 已补充 GDPR 和 CCPA 权利说明到 Privacy Policy 草稿
 - 不面向 13 岁以下儿童，COPPA 不触发
 
 ---
@@ -113,13 +115,13 @@ JSON 导出（用户主动下载备份文件）
 | AP 模考分数（MCQ/FRQ） | 计算 AP 分数、生成进步曲线 | [待确认：用户同意 / 合法利益] | 无（纯本地） | 永久（localStorage） | ✅ 可清除浏览器数据或应用内删除 |
 | 章节得分 Breakdown | 生成热力图、定位薄弱点 | [待确认] | 无 | 永久 | ✅ 同上 |
 | 访问日志（IP、UA） | 安全、防滥用、排错 | 合法利益 | Vercel / Cloudflare | 按服务商政策（通常 30 天） | ❌ 无法单独删除 |
-| 分析数据 | [待确认：是否使用 GA/Plausible] | [待确认] | [待确认] | [待确认] | [待确认] |
+| 分析数据 | 统计访问、优化页面 | 合法利益 | Plausible Analytics | 按 Plausible 配置 | ✅ 可通过浏览器设置退出 |
 
 **待确认项：**
-- [ ] 是否使用 Google Analytics / Plausible / 其他分析工具？
-- [ ] 是否使用 Cloudflare Analytics？
-- [ ] 目标市场是否包含欧盟/英国？（影响 lawful basis 选择）
-- [ ] 站点运营主体（个人/公司）及联系邮箱
+- [x] 是否使用 Google Analytics / Plausible / 其他分析工具？→ **Plausible**
+- [x] 是否使用 Cloudflare Analytics？→ **Cloudflare CDN**
+- [x] 目标市场是否包含欧盟/英国？→ **全球覆盖**
+- [x] 站点运营主体（个人/公司）及联系邮箱 → **Weldon / weldonz2026@gmail.com**
 
 ---
 
@@ -235,13 +237,15 @@ Last updated: [待确认]
    We do not collect personal information directly. All data you enter (practice test scores, topic breakdowns) is stored locally in your browser using localStorage. We do not have access to this data.
 
 3. Information We May Collect Automatically
-   [待确认：是否使用分析工具？]
-   - If we use analytics (e.g., Plausible, Google Analytics), we collect: IP address, browser type, pages visited, visit duration.
-   - If we do not use analytics, we only collect standard server logs via our hosting provider (Vercel).
+   We use Plausible Analytics for privacy-friendly traffic analysis. Plausible does not use cookies and does not collect personal data. See https://plausible.io/privacy.
+   
+   We also collect standard server logs via our hosting provider (Vercel) and CDN provider (Cloudflare), which may include: IP address, browser type, pages visited, visit duration.
 
 4. Third-Party Services
-   - Vercel: Hosting provider. May collect access logs. See Vercel Privacy Policy.
-   - [待确认：Cloudflare? Analytics?]
+   - Vercel: Hosting provider. May collect access logs. See https://vercel.com/legal/privacy-policy
+   - Cloudflare: CDN and DNS provider. May collect access logs. See https://www.cloudflare.com/privacypolicy/
+   - Plausible Analytics: Privacy-friendly analytics. No cookies, no personal data. See https://plausible.io/privacy
+   - Namecheap: Domain registrar. See https://www.namecheap.com/legal/general/privacy-policy/
 
 5. Data Retention
    - Your practice test data: Stored in your browser's localStorage until you clear it.
@@ -249,7 +253,8 @@ Last updated: [待确认]
 
 6. Your Rights
    - You can clear all your data at any time by using the "Clear All Data" button in the app or by clearing your browser's localStorage.
-   - [待确认：GDPR/CCPA 权利说明]
+   - GDPR Rights (for EU/UK users): You have the right to access, rectify, erase, restrict processing, object to processing, and data portability. Since we do not store personal data on our servers, most requests can be fulfilled by clearing your browser data. For any other requests, contact us at weldonz2026@gmail.com.
+   - CCPA Rights (for California users): You have the right to know what personal information is collected, the right to delete personal information, and the right to opt-out of the sale of personal information. We do not sell personal information.
 
 7. Children's Privacy
    Our service is designed for high school students (ages 14-18). We do not knowingly collect data from children under 13. If you believe a child under 13 has used our service, please contact us.
@@ -258,14 +263,15 @@ Last updated: [待确认]
    We may update this policy. Changes will be posted on this page with an updated date.
 
 9. Contact Us
-   [待确认：联系邮箱]
+   Email: weldonz2026@gmail.com
+   Operator: Weldon (Individual Developer)
 ```
 
 ### 11.2 Terms of Service 草稿骨架
 
 ```
 Terms of Service — AP Score Tracker
-Last updated: [待确认]
+Last updated: 2026-05-21
 
 1. Acceptance of Terms
    By using AP Score Tracker, you agree to these Terms.
@@ -291,10 +297,11 @@ Last updated: [待确认]
    We may update these terms. Continued use constitutes acceptance.
 
 8. Governing Law
-   These Terms are governed by the laws of the State of California, United States, without regard to its conflict of law principles. Any disputes shall first be attempted to be resolved informally by contacting us. If informal resolution fails, disputes shall be resolved through binding arbitration conducted remotely via video conference.
+   These Terms are governed by the laws of the State of California, United States, without regard to its conflict of law principles. Any disputes shall first be attempted to be resolved informally by contacting us at weldonz2026@gmail.com. If informal resolution fails, disputes shall be resolved through binding arbitration conducted remotely via video conference.
 
 9. Contact
-   [待确认：联系邮箱]
+   Email: weldonz2026@gmail.com
+   Operator: Weldon (Individual Developer)
 ```
 
 ### 11.3 Disclaimer 草稿
@@ -308,31 +315,34 @@ AP Score Tracker is an independent tool and is not affiliated with, endorsed by,
 - Score predictions are estimates based on publicly available scoring curves.
 - Your official AP score may differ from our predictions.
 - This tool is for informational purposes only and does not guarantee any specific result.
+
+Contact: weldonz2026@gmail.com
+Operator: Weldon (Individual Developer)
 ```
 
 ### 11.4 Cookie Policy 草稿（当前不需要，预留）
 
 ```
 Cookie Policy — AP Score Tracker
-Last updated: [待确认]
+Last updated: 2026-05-21
 
 We use minimal cookies necessary for the functioning of our website.
 
-Currently, we do not use analytics cookies, advertising cookies, or tracking pixels.
+We use Plausible Analytics for privacy-friendly traffic analysis. Plausible does not use cookies and does not collect personal data. See https://plausible.io/privacy.
 
-If we add analytics in the future, we will update this policy and request your consent where required by law.
+We do not use analytics cookies, advertising cookies, or tracking pixels.
+
+If we add additional analytics or tracking in the future, we will update this policy and request your consent where required by law.
 ```
 
 ### 11.5 Refund Policy 草稿（Phase 1 后启用）
 
 ```
 Refund Policy — AP Score Tracker
-Last updated: [待确认]
-
-[待确认：以下条款需根据实际支付提供商和运营主体调整]
+Last updated: 2026-05-21
 
 1. Subscription Refunds
-   - You may request a full refund within [待确认：7/14/30] days of your initial purchase.
+   - You may request a full refund within 15 days of your initial purchase.
    - Refund requests after this period are considered on a case-by-case basis.
 
 2. Cancellation
@@ -343,7 +353,7 @@ Last updated: [待确认]
    - Refunds are typically processed within 5-10 business days.
 
 4. Contact
-   - To request a refund, contact us at [待确认：联系邮箱].
+   - To request a refund, contact us at weldonz2026@gmail.com.
 ```
 
 ---
@@ -352,14 +362,14 @@ Last updated: [待确认]
 
 | # | 事项 | 影响 | 建议动作 |
 |---|---|---|---|
-| 1 | 站点运营主体（个人/公司）及联系邮箱 | Privacy Policy、Terms、Contact 页面必需 | 用户确认后填入 |
+| 1 | **站点运营主体（个人/公司）及联系邮箱** | Privacy Policy、Terms、Contact 页面必需 | **已确认：Weldon / weldonz2026@gmail.com** |
 | 2 | ~~适用法律 / 管辖地~~ | Terms of Service 必需 | **已确认：California 法律 + 在线仲裁** |
-| 3 | 是否使用分析工具（GA/Plausible/Cloudflare Analytics） | 数据处理表、Cookie Policy、GDPR 合规 | 若使用需补 Cookie Banner |
-| 4 | 是否使用 Cloudflare CDN | 第三方清单、跨境传输 | 确认后更新清单 |
-| 5 | 目标市场是否明确包含欧盟/英国 | GDPR 合规深度 | 若覆盖需补充 lawful basis 详细说明 |
-| 6 | 退款窗口（Phase 1 后） | Refund Policy | 建议 7-14 天 |
-| 7 | 取消路径（Phase 1 后） | 支付合规 | 建议应用内自助取消 |
-| 8 | 是否添加 "AP®" 商标声明 | 品牌风险 | 建议页脚加 "AP is a registered trademark of College Board" |
+| 3 | **是否使用分析工具（GA/Plausible/Cloudflare Analytics）** | 数据处理表、Cookie Policy、GDPR 合规 | **已确认：Plausible（无 Cookie，无需 Banner）** |
+| 4 | **是否使用 Cloudflare CDN** | 第三方清单、跨境传输 | **已确认：使用 Cloudflare CDN** |
+| 5 | **目标市场是否明确包含欧盟/英国** | GDPR 合规深度 | **已确认：全球覆盖** |
+| 6 | **退款窗口（Phase 1 后）** | Refund Policy | **已确认：15 天** |
+| 7 | **取消路径（Phase 1 后）** | 支付合规 | **已确认：应用内取消（后续补充）** |
+| 8 | **AP® 商标声明** | 品牌风险 | **已确认：页脚加 trademark 声明** |
 
 ---
 

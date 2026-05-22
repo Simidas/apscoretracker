@@ -9,7 +9,7 @@ export default function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
           {/* Left: Text */}
-          <div className="max-w-xl">
+          <div className="max-w-xl animate-fade-in-up">
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-text-primary leading-tight">
               Track Your AP Progress Across Every Practice Test
             </h1>
@@ -22,8 +22,8 @@ export default function HeroSection() {
                 Start Tracking Free — No Signup Needed
                 <ArrowRight size={18} />
               </Button>
-              <Button variant="ghost" size="lg">
-                See How It Works
+              <Button variant="ghost" size="lg" className="cursor-pointer">
+                <a href="#how-it-works" className="no-underline text-inherit">See How It Works</a>
               </Button>
             </div>
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-text-secondary">
@@ -43,7 +43,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right: Dashboard Preview */}
-          <div className="relative">
+          <div className="relative animate-fade-in-up-delay-1">
             <div className="bg-surface border border-border rounded-card p-6 shadow-2xl">
               {/* Chart Header */}
               <div className="flex items-center justify-between mb-4">

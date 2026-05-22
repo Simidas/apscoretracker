@@ -33,7 +33,7 @@ const features = [
 
 export default function Features() {
   return (
-    <section className="py-20 lg:py-28">
+    <section id="features" className="py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="text-sm text-accent-teal uppercase tracking-wider font-medium mb-3">
@@ -48,9 +48,9 @@ export default function Features() {
           {features.map((feature, index) => (
             <div
               key={index}
-              className={`bg-surface border border-border rounded-card p-6 lg:p-8 hover:border-accent-teal/30 transition-colors ${
+              className={`bg-surface border border-border rounded-card p-6 lg:p-8 hover:border-accent-teal/30 transition-all duration-300 hover:-translate-y-1 ${
                 feature.size === "large" ? "md:col-span-1" : ""
-              }`}
+              } animate-fade-in-up-delay-${index}`}
             >
               <div className="w-12 h-12 rounded-button bg-accent-teal/10 flex items-center justify-center mb-4">
                 <feature.icon size={24} className="text-accent-teal" />

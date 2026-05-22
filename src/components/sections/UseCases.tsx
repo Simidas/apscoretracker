@@ -28,7 +28,7 @@ export default function UseCases() {
   return (
     <section className="py-20 lg:py-28 bg-surface/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in-up">
           <p className="text-sm text-accent-teal uppercase tracking-wider font-medium mb-3">
             Use Cases
           </p>
@@ -41,7 +41,7 @@ export default function UseCases() {
           {useCases.map((uc, index) => (
             <div
               key={index}
-              className="bg-background border border-border rounded-card p-6 lg:p-8 border-l-[3px] border-l-accent-teal"
+              className={`bg-background border border-border rounded-card p-6 lg:p-8 border-l-[3px] border-l-accent-teal hover:border-accent-teal/30 transition-all duration-300 hover:-translate-y-1 animate-fade-in-up-delay-${index}`}
             >
               <h3 className="font-display text-xl font-semibold text-text-primary mb-4">
                 {uc.title}

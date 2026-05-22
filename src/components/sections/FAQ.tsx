@@ -42,7 +42,7 @@ export default function FAQ() {
   return (
     <section id="faq" className="py-20 lg:py-28">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in-up">
           <p className="text-sm text-accent-teal uppercase tracking-wider font-medium mb-3">
             FAQ
           </p>
@@ -51,7 +51,7 @@ export default function FAQ() {
           </h2>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-3 animate-fade-in-up-delay-1">
           {faqs.map((faq, index) => (
             <div
               key={index}
@@ -78,7 +78,7 @@ export default function FAQ() {
                 />
               </button>
               {openIndex === index && (
-                <div className="px-5 pb-5">
+                <div className="px-5 pb-5 border-l-2 border-accent-amber ml-5">
                   <p className="text-text-secondary leading-relaxed">
                     {faq.answer}
                   </p>

@@ -40,13 +40,13 @@ export default function Footer() {
           {/* Links */}
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <a
-              href="#"
+              href="/privacy"
               className="text-text-secondary hover:text-text-primary transition-colors"
             >
               Privacy Policy
             </a>
             <a
-              href="#"
+              href="/terms"
               className="text-text-secondary hover:text-text-primary transition-colors"
             >
               Terms of Service

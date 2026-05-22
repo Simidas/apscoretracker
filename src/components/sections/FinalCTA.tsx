@@ -6,7 +6,7 @@ import { ArrowRight, Shield, CreditCard, UserX } from "lucide-react";
 export default function FinalCTA() {
   return (
     <section className="py-20 lg:py-28 bg-surface/50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
         <p className="text-text-secondary text-lg leading-relaxed max-w-2xl mx-auto">
           You&apos;ve got practice tests piling up. You know you should track them,
           but spreadsheets are clunky and calculator sites forget your scores the

@@ -28,7 +28,7 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="subjects" className="py-20 lg:py-28">
+    <section id="how-it-works" className="py-20 lg:py-28">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="text-sm text-accent-teal uppercase tracking-wider font-medium mb-3">
@@ -44,7 +44,10 @@ export default function HowItWorks() {
           <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-px bg-border" />
 
           {steps.map((step, index) => (
-            <div key={index} className="relative text-center">
+            <div
+              key={index}
+              className={`relative text-center animate-fade-in-up-delay-${index}`}
+            >
               <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-surface border border-border mb-6 relative z-10">
                 <div className="text-center">
                   <step.icon size={24} className="text-accent-teal mx-auto mb-1" />

@@ -10,7 +10,8 @@
     "pages:build": "npx @cloudflare/next-on-pages",
     "pages:deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static --project-name apscoretracker",
     "workers:build": "npx @cloudflare/next-on-pages",
-    "workers:deploy": "npm run workers:build && wrangler deploy"
+    "workers:deploy": "npm run workers:build && wrangler deploy",
+    "deploy": "npm run workers:build && wrangler deploy"
   },
   "dependencies": {
     "@base-ui/react": "^1.4.1",
@@ -18,7 +19,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.16.0",
-    "next": "14.2.35",
+    "next": "^15.0.0",
     "react": "^18",
     "react-dom": "^18",
     "recharts": "^3.8.1",

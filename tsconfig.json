@@ -25,7 +25,8 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "target": "ES2017"
   },
   "include": [
     "next-env.d.ts",
@@ -35,7 +36,6 @@
     "dist/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
-    "src/index.ts"
+    "node_modules"
   ]
 }

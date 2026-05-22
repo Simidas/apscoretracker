@@ -25,7 +25,7 @@
 - **Missing Info:**
   - [待确认] Real user testimonials
   - [待确认] Actual usage statistics
-  - [待确认] Exact number of supported AP subjects at launch
+  - [x] Exact number of supported AP subjects at launch: **5 subjects** (AP Lang, AP Psych, AP Calc AB, AP Bio, APUSH)
 
 ---
 
@@ -46,7 +46,7 @@
 ## 2. How It Works｜3 Steps
 
 **Step 1:** Choose Your Subject
-Select from 10+ AP exams — Lang, Psych, Calc, Physics, Bio, Chem, and more.
+Select from 5 subjects at launch — AP Lang, AP Psych, AP Calc AB, AP Bio, and AP US History. More coming based on demand.
 
 **Step 2:** Enter Your Scores
 Input your MCQ and FRQ raw scores from any practice test.
@@ -145,7 +145,7 @@ View your improvement curve and topic heatmap instantly. Save unlimited records.
 - ✅ Free forever — no credit card, no trial period
 - ✅ Your data never leaves your browser
 - ✅ Built for students, by a student developer
-- ✅ 10+ AP subjects supported
+- ✅ 5 subjects at launch — more coming
 
 ---
 
@@ -161,7 +161,7 @@ View your improvement curve and topic heatmap instantly. Save unlimited records.
 - ✅ Progress curve visualization
 - ✅ Topic heatmap breakdown
 - ✅ JSON export/backup
-- ✅ 10+ AP subject calculators
+- ✅ 5 subject calculators at launch — more coming
 - ✅ Mobile-friendly design
 
 **Price:** $0 forever
@@ -284,7 +284,7 @@ AP Score Tracker fixes that. Choose your subject, enter your scores, and watch y
 
 ### Variant C
 - **SEO Title:** AP Practice Test Tracker — No Signup, Free Forever
-- **SEO Description:** Track AP exam scores across 10+ subjects. Local storage, JSON export, progress curves, and topic heatmaps. Built for students.
+- **SEO Description:** Track AP exam scores across 5 subjects at launch. Local storage, JSON export, progress curves, and topic heatmaps. Built for students.
 - **OG Title:** Track AP Scores Without Signing Up
 - **OG Description:** Free, private, and instant. Your practice test data never leaves your browser.
 
@@ -294,7 +294,7 @@ AP Score Tracker fixes that. Choose your subject, enter your scores, and watch y
 
 ### 1. Write for scanners ✅
 - [x] 每个 section 有标题
-- [x] 关键数字和结论突出（"within 0.5 points", "10+ subjects", "$0 forever"）
+- [x] 关键数字和结论突出（"within 0.5 points", "5 subjects", "$0 forever"）
 - [x] 用 bullet point，不用大段落
 - [x] 段落不超过 3 行
 
@@ -309,7 +309,7 @@ AP Score Tracker fixes that. Choose your subject, enter your scores, and watch y
 
 ### 4. Specific > vague ✅
 - [x] "within 0.5 points" 而不是 "very accurate"
-- [x] "10+ AP subjects" 而不是 "many subjects"
+- [x] "5 subjects at launch" 而不是 "many subjects"
 - [x] "30 seconds" 而不是 "fast"
 - [x] "$4.99/month" 而不是 "affordable"
 

@@ -75,7 +75,9 @@ export default function Navigation() {
 
           {/* Desktop CTA */}
           <div className="hidden md:block">
-            <Button size="sm">Start Tracking — Free</Button>
+            <Button size="sm" onClick={() => (window.location.href = "/tracker")}>
+              Start Tracking — Free
+            </Button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -102,7 +104,15 @@ export default function Navigation() {
                 {link.label}
               </a>
             ))}
-            <Button className="w-full mt-2">Start Tracking — Free</Button>
+            <Button
+              className="w-full mt-2"
+              onClick={() => {
+                setMobileOpen(false);
+                window.location.href = "/tracker";
+              }}
+            >
+              Start Tracking — Free
+            </Button>
           </div>
         </div>
       )}

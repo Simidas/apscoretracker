@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
 
 export default function HeroSection() {
+  const openTracker = () => {
+    window.location.href = "/tracker";
+  };
+
   return (
     <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,7 +22,7 @@ export default function HeroSection() {
               study next. No signup, no login — your data stays in your browser.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="gap-2">
+              <Button size="lg" className="gap-2" onClick={openTracker}>
                 Start Tracking Free — No Signup Needed
                 <ArrowRight size={18} />
               </Button>

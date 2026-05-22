@@ -34,7 +34,7 @@ export default function TermsPage() {
           <Section title="4. Disclaimer">
             <ul className="list-disc list-inside space-y-2 text-text-secondary">
               <li>AP Score Tracker is not affiliated with, endorsed by, or approved by College Board.</li>
-              <li>Score predictions are estimates based on publicly available scoring curves and may not reflect your official AP score.</li>
+              <li>Score estimates use simplified subject weights and may not reflect your official AP score.</li>
               <li>We do not guarantee any specific score improvement.</li>
               <li>AP is a registered trademark of College Board.</li>
             </ul>

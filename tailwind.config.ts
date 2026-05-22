@@ -12,11 +12,13 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
         surface: "#141419",
+        muted: "#1E1E28",
         border: "#1E1E28",
         "text-primary": "#E8ECF0",
         "text-secondary": "#8A8F98",
         "accent-teal": "#00E5CC",
         "accent-amber": "#FFB800",
+        destructive: "#ef4444",
       },
       fontFamily: {
         display: ["var(--font-space-grotesk)", "sans-serif"],

@@ -43,6 +43,10 @@ const plans = [
 ];
 
 export default function Pricing() {
+  const openTracker = () => {
+    window.location.href = "/tracker";
+  };
+
   return (
     <section id="pricing" className="py-20 lg:py-28 bg-surface/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -107,6 +111,7 @@ export default function Pricing() {
                   variant={plan.ctaVariant}
                   className="w-full"
                   disabled={plan.highlighted}
+                  onClick={plan.highlighted ? undefined : openTracker}
                 >
                   {plan.cta}
                 </Button>

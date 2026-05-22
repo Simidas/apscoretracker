@@ -30,17 +30,9 @@ export default function PrivacyPage() {
 
           <Section title="3. Information We May Collect Automatically">
             <p>
-              We use Plausible Analytics for privacy-friendly traffic analysis. 
-              Plausible does not use cookies and does not collect personal data. 
-              See{" "}
-              <a href="https://plausible.io/privacy" className="text-accent-teal hover:underline" target="_blank" rel="noopener noreferrer">
-                plausible.io/privacy
-              </a>.
-            </p>
-            <p className="mt-3">
-              We also collect standard server logs via our hosting provider (Cloudflare Pages) 
-              and CDN provider (Cloudflare), which may include: IP address, browser type, 
-              pages visited, visit duration.
+              We do not currently run analytics scripts in the application. Our hosting provider
+              and CDN provider (Cloudflare) may collect standard server logs, which can include
+              IP address, browser type, requested URL, and request time.
             </p>
           </Section>
 
@@ -57,13 +49,6 @@ export default function PrivacyPage() {
                 <strong className="text-text-primary">Cloudflare CDN:</strong> CDN and DNS provider. 
                 May collect access logs.{" "}
                 <a href="https://www.cloudflare.com/privacypolicy/" className="text-accent-teal hover:underline" target="_blank" rel="noopener noreferrer">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <strong className="text-text-primary">Plausible Analytics:</strong> Privacy-friendly analytics. 
-                No cookies, no personal data.{" "}
-                <a href="https://plausible.io/privacy" className="text-accent-teal hover:underline" target="_blank" rel="noopener noreferrer">
                   Privacy Policy
                 </a>
               </li>
@@ -86,7 +71,7 @@ export default function PrivacyPage() {
           <Section title="6. Your Rights">
             <p className="text-text-secondary">
               You can clear all your data at any time by using the &quot;Clear All Data&quot; button 
-              in the app or by clearing your browser&apos;s localStorage.
+              in the tracker or by clearing your browser&apos;s localStorage.
             </p>
             <p className="mt-3 text-text-secondary">
               <strong className="text-text-primary">GDPR Rights (EU/UK users):</strong>{" "}

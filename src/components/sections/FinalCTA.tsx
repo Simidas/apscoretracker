@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, CreditCard, UserX } from "lucide-react";
 
 export default function FinalCTA() {
+  const openTracker = () => {
+    window.location.href = "/tracker";
+  };
+
   return (
     <section className="py-20 lg:py-28 bg-surface/50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center animate-fade-in-up">
@@ -22,7 +26,7 @@ export default function FinalCTA() {
         </p>
 
         <div className="mt-10">
-          <Button size="lg" className="gap-2">
+          <Button size="lg" className="gap-2" onClick={openTracker}>
             Track My First Practice Test — Free
             <ArrowRight size={18} />
           </Button>

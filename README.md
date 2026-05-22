@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AP Score Tracker
 
-## Getting Started
+AP Score Tracker is a local-first practice test tracker for AP students. It lets students choose a subject, enter MCQ/FRQ raw scores, save practice attempts in the browser, review a progress curve, inspect topic strengths, and export their records as JSON.
 
-First, run the development server:
+## Current Scope
+
+- 5 launch subjects: AP Lang, AP Psych, AP Calculus AB, AP Biology, and AP US History
+- Raw MCQ + FRQ score input with a weighted estimated 1-5 AP score
+- Browser-only persistence via `localStorage`
+- Per-subject history list
+- Recharts progress curve
+- Topic accuracy sliders and average strength heatmap
+- JSON export
+- Privacy and Terms pages
+
+The score thresholds and weights are MVP estimates for progress tracking. They are not official College Board scoring curves.
+
+## Tech Stack
+
+- Next.js 14 App Router
+- React 18
+- Tailwind CSS
+- Recharts
+- Lucide icons
+- Static export for Cloudflare Pages
+
+## Development
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+The app is configured for static export with output written to `out`.
 
-To learn more about Next.js, take a look at the following resources:
+## Deployment
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Cloudflare scripts are available in `package.json`:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run pages:build
+npm run pages:deploy
+```
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+AP is a registered trademark of College Board. AP Score Tracker is independent and is not affiliated with, endorsed by, or approved by College Board.

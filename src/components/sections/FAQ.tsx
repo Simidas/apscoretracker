@@ -17,7 +17,7 @@ const faqs = [
   {
     question: "How accurate is the score prediction?",
     answer:
-      "We use publicly available scoring curves based on College Board exam data. Predictions are typically within 0.5 points of official scores, but your actual AP score may vary. This tool is for tracking progress, not guaranteeing results.",
+      "It is a rough estimate for progress tracking, based on public exam format information and simplified subject weights. Your official AP score may differ. Use it to compare practice tests over time, not as a guarantee.",
   },
   {
     question: "Which AP subjects are supported?",

@@ -5,6 +5,7 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -14,8 +15,10 @@ import {
   BarChart3,
   Download,
   Flame,
+  Lightbulb,
   Plus,
   RotateCcw,
+  Target,
   Trash2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -25,6 +28,8 @@ import {
   clamp,
   ExamRecord,
   getSubject,
+  getTargetScore,
+  setTargetScore,
   STORAGE_KEY,
   subjects,
   TopicScores,
@@ -45,6 +50,7 @@ export default function TrackerApp() {
   const [formError, setFormError] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [loaded, setLoaded] = useState(false);
+  const [targetScore, setTargetScoreState] = useState<1 | 2 | 3 | 4 | 5>(3);
 
   const selectedSubject = getSubject(selectedSubjectId);
   const numericMcq = Number(mcqScore) || 0;
@@ -65,6 +71,7 @@ export default function TrackerApp() {
   );
 
   const latestRecord = subjectRecords.at(-1);
+
   const averageTopicScores = useMemo(() => {
     return selectedSubject.topics.map((topic) => {
       const values = subjectRecords
@@ -84,6 +91,41 @@ export default function TrackerApp() {
     apScore: record.apScore,
     totalPercent: record.totalPercent,
   }));
+
+  const studyTips = useMemo(() => {
+    if (!subjectRecords.length) {
+      return "Save a practice test to get personalized study tips.";
+    }
+
+    const sorted = [...averageTopicScores].sort((a, b) => a.average - b.average);
+    const weakest = sorted.slice(0, 2);
+    const strongest = sorted.at(-1);
+
+    let tip = `Your weakest areas are ${weakest[0].name} (${weakest[0].average}%)`;
+    if (weakest[1]) {
+      tip += ` and ${weakest[1].name} (${weakest[1].average}%)`;
+    }
+    tip += `. Focus your next study session on ${weakest[0].name}.`;
+
+    if (latestRecord) {
+      const gap = targetScore - latestRecord.apScore;
+      if (gap > 0) {
+        tip += ` You're ${gap} point${gap > 1 ? "s" : ""} away from your target AP ${targetScore}. Keep grinding!`;
+      } else {
+        tip += ` You're on track for your target! Maintain your strength in ${strongest?.name}.`;
+      }
+    }
+
+    return tip;
+  }, [averageTopicScores, subjectRecords.length, latestRecord, targetScore]);
+
+  const gapDisplay = useMemo(() => {
+    if (!latestRecord) return "-";
+    const gap = targetScore - latestRecord.apScore;
+    if (gap > 0) return `+${gap}`;
+    if (gap < 0) return `${gap}`;
+    return "✓ Met";
+  }, [latestRecord, targetScore]);
 
   useEffect(() => {
     try {
@@ -109,7 +151,13 @@ export default function TrackerApp() {
     setTopicScores(
       Object.fromEntries(selectedSubject.topics.map((topic) => [topic.id, 70]))
     );
+    setTargetScoreState(getTargetScore(selectedSubject.id));
   }, [selectedSubject]);
+
+  function handleTargetChange(score: 1 | 2 | 3 | 4 | 5) {
+    setTargetScoreState(score);
+    setTargetScore(selectedSubjectId, score);
+  }
 
   function saveRecord() {
     setFormError("");
@@ -354,6 +402,25 @@ export default function TrackerApp() {
 
               <div className="mt-5">
                 <label className="block text-sm font-medium text-text-primary mb-2">
+                  Target AP Score
+                </label>
+                <select
+                  value={targetScore}
+                  onChange={(e) =>
+                    handleTargetChange(Number(e.target.value) as 1 | 2 | 3 | 4 | 5)
+                  }
+                  className="h-11 w-full rounded-button border border-border bg-background px-3 text-text-primary outline-none transition-colors focus:border-accent-teal"
+                >
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                  <option value={3}>3</option>
+                  <option value={4}>4</option>
+                  <option value={5}>5</option>
+                </select>
+              </div>
+
+              <div className="mt-5">
+                <label className="block text-sm font-medium text-text-primary mb-2">
                   Notes
                 </label>
                 <textarea
@@ -372,7 +439,7 @@ export default function TrackerApp() {
           </div>
 
           <div className="space-y-6">
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-4">
               <MetricCard
                 icon={<BarChart3 size={18} />}
                 label="Saved Tests"
@@ -387,6 +454,11 @@ export default function TrackerApp() {
                 icon={<Download size={18} />}
                 label="Latest Composite"
                 value={latestRecord ? `${latestRecord.totalPercent}%` : "-"}
+              />
+              <MetricCard
+                icon={<Target size={18} />}
+                label="Gap to Target"
+                value={gapDisplay}
               />
             </div>
 
@@ -429,6 +501,18 @@ export default function TrackerApp() {
                         }}
                         labelStyle={{ color: "#E8ECF0" }}
                       />
+                      <ReferenceLine
+                        y={targetScore}
+                        stroke="#FFB800"
+                        strokeDasharray="6 4"
+                        strokeWidth={2}
+                        label={{
+                          value: `Target: AP ${targetScore}`,
+                          position: "right",
+                          fill: "#FFB800",
+                          fontSize: 12,
+                        }}
+                      />
                       <Area
                         type="monotone"
                         dataKey="apScore"
@@ -442,6 +526,20 @@ export default function TrackerApp() {
                   <EmptyState text="Save a practice test to draw your progress curve." />
                 )}
               </div>
+            </Panel>
+
+            <Panel>
+              <div className="mb-4 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-button bg-accent-amber/10 text-accent-amber">
+                  <Lightbulb size={18} />
+                </div>
+                <h3 className="font-display text-xl font-semibold text-text-primary">
+                  Study Tips
+                </h3>
+              </div>
+              <p className="text-sm text-text-secondary leading-relaxed">
+                {studyTips}
+              </p>
             </Panel>
 
             <div className="grid gap-6 xl:grid-cols-[1fr_360px]">

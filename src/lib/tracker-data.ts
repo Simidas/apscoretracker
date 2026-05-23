@@ -33,6 +33,32 @@ export type ExamRecord = {
 };
 
 export const STORAGE_KEY = "apst_records";
+export const TARGET_KEY = "apst_targets";
+
+export function getTargetScore(subjectId: string): 1 | 2 | 3 | 4 | 5 {
+  try {
+    const stored = window.localStorage.getItem(TARGET_KEY);
+    if (stored) {
+      const targets = JSON.parse(stored) as Record<string, number>;
+      const score = targets[subjectId];
+      if (score >= 1 && score <= 5) return score as 1 | 2 | 3 | 4 | 5;
+    }
+  } catch {
+    // ignore
+  }
+  return 3;
+}
+
+export function setTargetScore(subjectId: string, score: 1 | 2 | 3 | 4 | 5) {
+  try {
+    const stored = window.localStorage.getItem(TARGET_KEY);
+    const targets = stored ? (JSON.parse(stored) as Record<string, number>) : {};
+    targets[subjectId] = score;
+    window.localStorage.setItem(TARGET_KEY, JSON.stringify(targets));
+  } catch {
+    // ignore
+  }
+}
 
 export const subjects: Subject[] = [
   {

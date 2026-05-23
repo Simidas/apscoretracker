@@ -73,3 +73,61 @@
   animation: fadeInUp 0.6s ease-out 0.3s forwards;
   opacity: 0;
 }
+
+/* Print-friendly styles */
+@media print {
+  @page {
+    margin: 1.5cm;
+  }
+
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  nav,
+  footer,
+  .no-print,
+  button,
+  input[type="range"],
+  .import-export-buttons,
+  .clear-buttons {
+    display: none !important;
+  }
+
+  .grid {
+    display: block !important;
+  }
+
+  .panel,
+  .rounded-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  svg {
+    max-width: 100%;
+    height: auto !important;
+  }
+
+  body::before {
+    content: "AP Score Tracker — Printed Report";
+    display: block;
+    font-size: 18pt;
+    font-weight: bold;
+    margin-bottom: 1cm;
+    border-bottom: 2pt solid #000;
+    padding-bottom: 0.5cm;
+    color: #000;
+  }
+
+  body::after {
+    content: "Generated from apscoretracker.com | Data stored locally in your browser";
+    display: block;
+    font-size: 8pt;
+    color: #666;
+    margin-top: 1cm;
+    border-top: 1pt solid #ccc;
+    padding-top: 0.3cm;
+  }
+}

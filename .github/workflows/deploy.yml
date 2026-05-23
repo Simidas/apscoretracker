@@ -24,6 +24,7 @@ jobs:
         run: |
           npm run build
           npx @cloudflare/next-on-pages
+          cp -r .vercel/output/static/_worker.js dist/
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3

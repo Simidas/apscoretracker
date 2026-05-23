@@ -1,10 +1,11 @@
 name = "apscoretracker"
+main = "./dist/_worker.js/index.js"
 compatibility_date = "2024-05-12"
 compatibility_flags = ["nodejs_compat"]
 
 # Static assets binding
 [site]
-bucket = "./.vercel/output/static"
+bucket = "./dist"
 
 # Uncomment when you need KV for data storage
 # [[kv_namespaces]]

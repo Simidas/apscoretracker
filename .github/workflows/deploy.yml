@@ -21,7 +21,9 @@ jobs:
         run: npm ci
 
       - name: Build static site
-        run: npm run build
+        run: |
+          npm run build
+          npx @cloudflare/next-on-pages
 
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3

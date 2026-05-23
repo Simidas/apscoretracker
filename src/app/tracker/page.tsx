@@ -1,6 +1,5 @@
 import TrackerApp from "@/components/sections/TrackerApp";
 import Footer from "@/components/sections/Footer";
-import Link from "next/link";
 
 export const metadata = {
   title: "Tracker — AP Score Tracker",
@@ -14,7 +13,7 @@ export default function TrackerPage() {
       <header className="border-b border-border bg-background/95">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
-            <Link href="/" className="flex items-center gap-2">
+            <a href="/" className="flex items-center gap-2">
               <svg
                 width="28"
                 height="28"
@@ -40,13 +39,13 @@ export default function TrackerPage() {
               <span className="font-display font-semibold text-text-primary text-lg">
                 AP Score Tracker
               </span>
-            </Link>
-            <Link
+            </a>
+            <a
               href="/"
               className="text-sm text-text-secondary transition-colors hover:text-text-primary"
             >
               Back to Home
-            </Link>
+            </a>
           </div>
         </div>
       </header>

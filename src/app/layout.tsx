@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { ClerkAppProvider } from "@/components/auth/ClerkAppProvider";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -48,7 +49,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <ClerkAppProvider>{children}</ClerkAppProvider>
+      </body>
     </html>
   );
 }

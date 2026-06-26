@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="py-12 border-t border-border">
@@ -5,7 +7,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-3 gap-8 items-start">
           {/* Logo & Copyright */}
           <div>
-            <a href="/" className="flex items-center gap-2 mb-4">
+            <Link href="/" className="flex items-center gap-2 mb-4">
               <svg
                 width="24"
                 height="24"
@@ -31,7 +33,7 @@ export default function Footer() {
               <span className="font-display font-semibold text-text-primary">
                 AP Score Tracker
               </span>
-            </a>
+            </Link>
             <p className="text-sm text-text-secondary">
               © 2026 Weldon. All rights reserved.
             </p>
@@ -39,18 +41,18 @@ export default function Footer() {
 
           {/* Links */}
           <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-            <a
+            <Link
               href="/privacy"
               className="text-text-secondary hover:text-text-primary transition-colors"
             >
               Privacy Policy
-            </a>
-            <a
+            </Link>
+            <Link
               href="/terms"
               className="text-text-secondary hover:text-text-primary transition-colors"
             >
               Terms of Service
-            </a>
+            </Link>
             <a
               href="mailto:weldonz2026@gmail.com"
               className="text-text-secondary hover:text-text-primary transition-colors"

@@ -18,8 +18,9 @@ const features = [
     size: "large",
   },
   {
-    title: "Zero Setup",
-    description: "No account. No password. Open and start tracking immediately.",
+    title: "Instant Estimate",
+    description:
+      "Calculate a score immediately. Sign in only when you want to save and sync your history.",
     icon: Zap,
     size: "small",
   },

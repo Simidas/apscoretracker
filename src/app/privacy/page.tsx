@@ -10,7 +10,7 @@ export default function PrivacyPage() {
         <h1 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mb-2">
           Privacy Policy
         </h1>
-        <p className="text-text-secondary text-sm mb-12">Last updated: May 22, 2026</p>
+        <p className="text-text-secondary text-sm mb-12">Last updated: July 28, 2026</p>
 
         <div className="prose prose-invert max-w-none">
           <Section title="1. Introduction">
@@ -22,39 +22,44 @@ export default function PrivacyPage() {
 
           <Section title="2. Information We Collect">
             <p>
-              We do not collect personal information directly. All data you enter 
-              (practice test scores, topic breakdowns) is stored locally in your browser 
-              using localStorage. We do not have access to this data.
+              When you create an account, we process your account identifier and
+              email address. When you save tracker data, we store practice test
+              scores, subject selections, target scores, topic breakdowns, notes,
+              and related timestamps so the service can display and sync your
+              progress.
             </p>
           </Section>
 
-          <Section title="3. Information We May Collect Automatically">
+          <Section title="3. Information Collected Automatically">
             <p>
-              We do not currently run analytics scripts in the application. Our hosting provider
-              and CDN provider (Cloudflare) may collect standard server logs, which can include
-              IP address, browser type, requested URL, and request time.
+              We use privacy-focused Plausible analytics to understand aggregate
+              site usage. Cloudflare may also process standard request information,
+              such as IP address, browser type, requested URL, and request time,
+              to operate and secure the service.
             </p>
           </Section>
 
           <Section title="4. Third-Party Services">
             <ul className="list-disc list-inside space-y-2 text-text-secondary">
               <li>
-                <strong className="text-text-primary">Cloudflare Pages:</strong> Hosting provider. 
-                May collect access logs.{" "}
+                <strong className="text-text-primary">Clerk:</strong> Provides
+                account registration, authentication, and session management.{" "}
+                <a href="https://clerk.com/legal/privacy" className="text-accent-teal hover:underline" target="_blank" rel="noopener noreferrer">
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <strong className="text-text-primary">Cloudflare Workers and D1:</strong>{" "}
+                Hosts the application and stores signed-in tracker data. Cloudflare
+                may also process security and access logs.{" "}
                 <a href="https://www.cloudflare.com/privacypolicy/" className="text-accent-teal hover:underline" target="_blank" rel="noopener noreferrer">
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <strong className="text-text-primary">Cloudflare CDN:</strong> CDN and DNS provider. 
-                May collect access logs.{" "}
-                <a href="https://www.cloudflare.com/privacypolicy/" className="text-accent-teal hover:underline" target="_blank" rel="noopener noreferrer">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <strong className="text-text-primary">Namecheap:</strong> Domain registrar.{" "}
-                <a href="https://www.namecheap.com/legal/general/privacy-policy/" className="text-accent-teal hover:underline" target="_blank" rel="noopener noreferrer">
+                <strong className="text-text-primary">Plausible:</strong> Provides
+                aggregate website analytics.{" "}
+                <a href="https://plausible.io/data-policy" className="text-accent-teal hover:underline" target="_blank" rel="noopener noreferrer">
                   Privacy Policy
                 </a>
               </li>
@@ -63,21 +68,28 @@ export default function PrivacyPage() {
 
           <Section title="5. Data Retention">
             <ul className="list-disc list-inside space-y-2 text-text-secondary">
-              <li>Your practice test data: Stored in your browser&apos;s localStorage until you clear it.</li>
-              <li>Server logs: Retained by Cloudflare per their policy (typically 30 days).</li>
+              <li>
+                Account and tracker data is retained while needed to provide the
+                service or until you request deletion.
+              </li>
+              <li>
+                Deleted tracker records may remain temporarily in protected
+                backups or soft-deleted storage before permanent removal.
+              </li>
+              <li>Infrastructure logs are retained according to provider policies.</li>
             </ul>
           </Section>
 
           <Section title="6. Your Rights">
             <p className="text-text-secondary">
-              You can clear all your data at any time by using the &quot;Clear All Data&quot; button 
-              in the tracker or by clearing your browser&apos;s localStorage.
+              You can remove tracker records using the controls in the app,
+              export your records as JSON, or contact us to request access,
+              correction, account deletion, or permanent data deletion.
             </p>
             <p className="mt-3 text-text-secondary">
               <strong className="text-text-primary">GDPR Rights (EU/UK users):</strong>{" "}
-              You have the right to access, rectify, erase, restrict processing, object to processing, 
-              and data portability. Since we do not store personal data on our servers, most requests 
-              can be fulfilled by clearing your browser data.
+              You may have rights to access, rectify, erase, restrict processing,
+              object to processing, and data portability, subject to applicable law.
             </p>
             <p className="mt-3 text-text-secondary">
               <strong className="text-text-primary">CCPA Rights (California users):</strong>{" "}

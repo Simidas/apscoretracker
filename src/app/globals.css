@@ -124,7 +124,7 @@
   }
 
   body::after {
-    content: "Generated from apscoretracker.com | Data stored locally in your browser";
+    content: "Generated from apscoretracker.com | Signed-in data synced securely";
     display: block;
     font-size: 8pt;
     color: #666;

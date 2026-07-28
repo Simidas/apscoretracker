@@ -18,11 +18,11 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "AP Score Tracker — Track Your Practice Test Progress Free",
   description:
-    "Free AP score tracker that visualizes your progress across multiple practice tests. See trends, spot weak topics, and know what to study next. No signup required.",
+    "Free AP score tracker that visualizes progress across practice tests. Estimate instantly, then sign in to securely sync trends, targets, and weak topics.",
   openGraph: {
     title: "Track Your AP Progress Across Every Practice Test",
     description:
-      "Free tool that saves your practice test scores and shows your improvement curve. No account needed.",
+      "Estimate AP scores for free and securely sync your saved practice history across devices.",
     type: "website",
   },
 };

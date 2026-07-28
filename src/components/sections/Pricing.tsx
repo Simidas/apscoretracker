@@ -10,7 +10,8 @@ const plans = [
     period: "forever",
     description: "Every AP student who wants to track their progress",
     features: [
-      "Unlimited score tracking",
+      "10 saved tests per subject",
+      "Secure cross-device sync",
       "Progress curve visualization",
       "Topic heatmap breakdown",
       "JSON export/backup",
@@ -58,7 +59,8 @@ export default function Pricing() {
             Free now. Pro when you need it.
           </h2>
           <p className="mt-4 text-text-secondary max-w-lg mx-auto">
-            The core tracker is free forever. Pro features unlock after we validate the basics.
+            Start with the free tracker. Pro will add higher limits and advanced
+            reports after the core experience is validated.
           </p>
         </div>
 

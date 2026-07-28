@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle, Landmark, TrendingUp, BarChart3 } from "lucide
 export const metadata: Metadata = {
   title: "AP US History Score Tracker & Calculator — Free Practice Test Tracker",
   description:
-    "Free AP US History score tracker. Calculate your APUSH score from MCQ and FRQ, track progress across practice tests, and identify weak historical periods. No signup required.",
+    "Free AP US History score tracker. Calculate your APUSH score from MCQ and FRQ, track progress across practice tests, and identify weak historical periods. Try the estimator free; sign in to save and sync progress.",
   keywords: [
     "ap us history score tracker",
     "apush score calculator",
@@ -37,7 +37,7 @@ export default function ApUsHistoryPage() {
           </h1>
           <p className="mt-6 text-lg text-text-secondary leading-relaxed max-w-2xl mx-auto">
             Track your AP US History practice test scores, visualize your progress,
-            and identify which historical periods need more study. Completely free — no account needed.
+            and identify which historical periods need more study. Try the estimator free, then sign in to save and sync your progress.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/tracker">

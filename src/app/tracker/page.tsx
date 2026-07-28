@@ -5,7 +5,7 @@ import Footer from "@/components/sections/Footer";
 export const metadata = {
   title: "Tracker — AP Score Tracker",
   description:
-    "Enter AP practice test scores, save attempts locally, and track progress by subject.",
+    "Enter AP practice test scores, sync attempts securely, and track progress by subject.",
 };
 
 export default function TrackerPage() {

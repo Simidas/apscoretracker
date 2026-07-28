@@ -1,5 +1,6 @@
 "use client";
 
+import { useClerk, useUser } from "@clerk/nextjs";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import {
   Area,
@@ -13,9 +14,12 @@ import {
 } from "recharts";
 import {
   BarChart3,
+  Cloud,
   Download,
   Flame,
   Lightbulb,
+  LoaderCircle,
+  LogIn,
   Plus,
   RotateCcw,
   Target,
@@ -25,31 +29,88 @@ import { Button } from "@/components/ui/button";
 import {
   calculateApScore,
   calculateTotalPercent,
-  clamp,
   ExamRecord,
   getSubject,
-  getTargetScore,
-  setTargetScore,
-  STORAGE_KEY,
   subjects,
   TopicScores,
 } from "@/lib/tracker-data";
+import {
+  ClientApiError,
+  createRecord,
+  fetchAccountSummary,
+  fetchRecords,
+  fetchTargetScores,
+  removeRecord,
+  updateTargetScore,
+  type AccountSummary,
+} from "@/lib/v2/client";
 
 const dateFormatter = new Intl.DateTimeFormat("en", {
   month: "short",
   day: "numeric",
 });
 
+const clerkConfigured = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
+
 export default function TrackerApp() {
+  if (!clerkConfigured) {
+    return (
+      <TrackerExperience
+        isAuthLoaded
+        isSignedIn={false}
+        requestSignIn={() => {
+          window.location.href = "/sign-in";
+        }}
+      />
+    );
+  }
+
+  return <ConfiguredTrackerApp />;
+}
+
+function ConfiguredTrackerApp() {
+  const { isLoaded, isSignedIn } = useUser();
+  const clerk = useClerk();
+
+  return (
+    <TrackerExperience
+      isAuthLoaded={isLoaded}
+      isSignedIn={Boolean(isSignedIn)}
+      requestSignIn={() =>
+        clerk.openSignIn({
+          fallbackRedirectUrl: "/tracker",
+          signUpFallbackRedirectUrl: "/tracker",
+        })
+      }
+    />
+  );
+}
+
+type TrackerExperienceProps = {
+  isAuthLoaded: boolean;
+  isSignedIn: boolean;
+  requestSignIn: () => void;
+};
+
+function TrackerExperience({
+  isAuthLoaded,
+  isSignedIn,
+  requestSignIn,
+}: TrackerExperienceProps) {
   const [selectedSubjectId, setSelectedSubjectId] = useState(subjects[0].id);
   const [records, setRecords] = useState<ExamRecord[]>([]);
+  const [targets, setTargets] = useState<
+    Record<string, 1 | 2 | 3 | 4 | 5>
+  >({});
+  const [account, setAccount] = useState<AccountSummary | null>(null);
   const [mcqScore, setMcqScore] = useState("");
   const [frqScore, setFrqScore] = useState("");
   const [notes, setNotes] = useState("");
   const [topicScores, setTopicScores] = useState<TopicScores>({});
   const [formError, setFormError] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
-  const [loaded, setLoaded] = useState(false);
+  const [isDataLoading, setIsDataLoading] = useState(false);
+  const [isMutating, setIsMutating] = useState(false);
   const [targetScore, setTargetScoreState] = useState<1 | 2 | 3 | 4 | 5>(3);
 
   const selectedSubject = getSubject(selectedSubjectId);
@@ -94,7 +155,9 @@ export default function TrackerApp() {
 
   const studyTips = useMemo(() => {
     if (!subjectRecords.length) {
-      return "Save a practice test to get personalized study tips.";
+      return isSignedIn
+        ? "Save a practice test to get personalized study tips."
+        : "Sign in and save a practice test to get personalized study tips.";
     }
 
     const sorted = [...averageTopicScores].sort((a, b) => a.average - b.average);
@@ -117,7 +180,13 @@ export default function TrackerApp() {
     }
 
     return tip;
-  }, [averageTopicScores, subjectRecords.length, latestRecord, targetScore]);
+  }, [
+    averageTopicScores,
+    subjectRecords.length,
+    isSignedIn,
+    latestRecord,
+    targetScore,
+  ]);
 
   const gapDisplay = useMemo(() => {
     if (!latestRecord) return "-";
@@ -128,40 +197,94 @@ export default function TrackerApp() {
   }, [latestRecord, targetScore]);
 
   useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored) {
-        const parsed = JSON.parse(stored) as ExamRecord[];
-        setRecords(Array.isArray(parsed) ? parsed : []);
-      }
-    } catch {
-      setRecords([]);
-    } finally {
-      setLoaded(true);
+    if (!isAuthLoaded) {
+      return;
     }
-  }, []);
 
-  useEffect(() => {
-    if (loaded) {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+    if (!isSignedIn) {
+      setRecords([]);
+      setTargets({});
+      setAccount(null);
+      setIsDataLoading(false);
+      return;
     }
-  }, [loaded, records]);
+
+    let cancelled = false;
+    setIsDataLoading(true);
+    setFormError("");
+
+    Promise.all([
+      fetchRecords(),
+      fetchTargetScores(),
+      fetchAccountSummary(),
+    ])
+      .then(([nextRecords, nextTargets, nextAccount]) => {
+        if (cancelled) return;
+
+        setRecords(nextRecords);
+        setTargets(nextTargets);
+        setAccount(nextAccount);
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setFormError(getErrorMessage(error, "Unable to load cloud data."));
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsDataLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthLoaded, isSignedIn]);
 
   useEffect(() => {
     setTopicScores(
       Object.fromEntries(selectedSubject.topics.map((topic) => [topic.id, 70]))
     );
-    setTargetScoreState(getTargetScore(selectedSubject.id));
-  }, [selectedSubject]);
+    setTargetScoreState(targets[selectedSubject.id] ?? 3);
+  }, [selectedSubject, targets]);
 
   function handleTargetChange(score: 1 | 2 | 3 | 4 | 5) {
+    const previousScore = targetScore;
     setTargetScoreState(score);
-    setTargetScore(selectedSubjectId, score);
+    setTargets((current) => ({ ...current, [selectedSubjectId]: score }));
+
+    if (!isSignedIn) {
+      setStatusMessage("Sign in to save your target score across devices.");
+      return;
+    }
+
+    void updateTargetScore(selectedSubjectId, score)
+      .then(() => {
+        setStatusMessage("Target score synced.");
+      })
+      .catch((error) => {
+        setTargetScoreState(previousScore);
+        setTargets((current) => ({
+          ...current,
+          [selectedSubjectId]: previousScore,
+        }));
+        setFormError(getErrorMessage(error, "Unable to save target score."));
+      });
   }
 
-  function saveRecord() {
+  async function refreshAccount() {
+    const nextAccount = await fetchAccountSummary();
+    setAccount(nextAccount);
+  }
+
+  async function saveRecord() {
     setFormError("");
     setStatusMessage("");
+
+    if (!isSignedIn) {
+      requestSignIn();
+      return;
+    }
 
     if (!mcqScore && !frqScore) {
       setFormError("Enter at least one MCQ or FRQ score before saving.");
@@ -178,56 +301,120 @@ export default function TrackerApp() {
       return;
     }
 
-    const record: ExamRecord = {
-      id: crypto.randomUUID(),
-      subjectId: selectedSubjectId,
-      date: new Date().toISOString(),
-      mcqScore: clamp(numericMcq, 0, selectedSubject.mcqMax),
-      frqScore: clamp(numericFrq, 0, selectedSubject.frqMax),
-      totalPercent,
-      apScore,
-      topicScores,
-      notes: notes.trim() || undefined,
-    };
+    setIsMutating(true);
 
-    setRecords((current) => [...current, record]);
-    setMcqScore("");
-    setFrqScore("");
-    setNotes("");
-    setStatusMessage("Practice test saved.");
+    try {
+      const record = await createRecord({
+        subjectId: selectedSubjectId,
+        date: new Date().toISOString(),
+        mcqScore: numericMcq,
+        frqScore: numericFrq,
+        topicScores,
+        notes: notes.trim() || undefined,
+      });
+
+      setRecords((current) => [...current, record]);
+      setMcqScore("");
+      setFrqScore("");
+      setNotes("");
+      setStatusMessage("Practice test saved to the cloud.");
+      await refreshAccount();
+    } catch (error) {
+      setFormError(getErrorMessage(error, "Unable to save practice test."));
+    } finally {
+      setIsMutating(false);
+    }
   }
 
-  function deleteRecord(id: string) {
+  async function deleteRecord(id: string) {
     const confirmed = window.confirm("Delete this practice test record?");
     if (!confirmed) return;
 
-    setRecords((current) => current.filter((record) => record.id !== id));
-    setStatusMessage("Practice test deleted.");
+    setIsMutating(true);
+    setFormError("");
+
+    try {
+      await removeRecord(id);
+      setRecords((current) => current.filter((record) => record.id !== id));
+      setStatusMessage("Practice test deleted.");
+      await refreshAccount();
+    } catch (error) {
+      setFormError(getErrorMessage(error, "Unable to delete practice test."));
+    } finally {
+      setIsMutating(false);
+    }
   }
 
-  function clearSubject() {
+  async function clearSubject() {
+    if (!isSignedIn) {
+      requestSignIn();
+      return;
+    }
+
     const confirmed = window.confirm(
       `Clear all saved records for ${selectedSubject.shortName}?`
     );
     if (!confirmed) return;
 
-    setRecords((current) =>
-      current.filter((record) => record.subjectId !== selectedSubjectId)
+    await deleteCloudRecords(
+      subjectRecords,
+      `${selectedSubject.shortName} records cleared.`
     );
-    setStatusMessage(`${selectedSubject.shortName} records cleared.`);
   }
 
-  function clearAllData() {
+  async function clearAllData() {
+    if (!isSignedIn) {
+      requestSignIn();
+      return;
+    }
+
     const confirmed = window.confirm(
-      "Clear all AP Score Tracker records from this browser?"
+      "Delete all AP Score Tracker records from your cloud account?"
     );
     if (!confirmed) return;
 
-    setRecords([]);
-    setStatusMessage("All local tracker records cleared.");
+    await deleteCloudRecords(records, "All cloud tracker records cleared.");
+  }
+
+  async function deleteCloudRecords(
+    recordsToDelete: ExamRecord[],
+    successMessage: string
+  ) {
+    if (!recordsToDelete.length) {
+      setStatusMessage("There are no saved records to clear.");
+      return;
+    }
+
+    setIsMutating(true);
+    setFormError("");
+
+    try {
+      await Promise.all(
+        recordsToDelete.map((record) => removeRecord(record.id))
+      );
+      const deletedIds = new Set(recordsToDelete.map((record) => record.id));
+      setRecords((current) =>
+        current.filter((record) => !deletedIds.has(record.id))
+      );
+      setStatusMessage(successMessage);
+      await refreshAccount();
+    } catch (error) {
+      setFormError(getErrorMessage(error, "Unable to clear cloud records."));
+      const latestRecords = await fetchRecords().catch(() => null);
+      if (latestRecords) {
+        setRecords(latestRecords);
+      }
+    } finally {
+      setIsMutating(false);
+    }
   }
 
   function exportJson() {
+    if (!isSignedIn) {
+      requestSignIn();
+      return;
+    }
+
     const data = JSON.stringify(records, null, 2);
     const blob = new Blob([data], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -246,8 +433,15 @@ export default function TrackerApp() {
 
     if (!file) return;
 
+    if (!isSignedIn) {
+      requestSignIn();
+      return;
+    }
+
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = async () => {
+      const importedRecords: ExamRecord[] = [];
+
       try {
         const parsed = JSON.parse(String(reader.result));
         if (!Array.isArray(parsed)) {
@@ -266,16 +460,40 @@ export default function TrackerApp() {
         );
         if (!confirmed) return;
 
-        setRecords((current) => {
-          const existingIds = new Set(current.map((record) => record.id));
-          const newRecords = validRecords.filter(
-            (record) => !existingIds.has(record.id)
-          );
-          return [...current, ...newRecords];
-        });
-        setStatusMessage(`${validRecords.length} records imported.`);
-      } catch {
-        setFormError("Import failed: choose a valid JSON backup file.");
+        setIsMutating(true);
+
+        for (const record of validRecords) {
+          const importedRecord = await createRecord({
+            subjectId: record.subjectId,
+            date: record.date,
+            mcqScore: record.mcqScore,
+            frqScore: record.frqScore,
+            topicScores: record.topicScores,
+            notes: record.notes,
+          });
+          importedRecords.push(importedRecord);
+        }
+
+        setRecords((current) => [...current, ...importedRecords]);
+        setStatusMessage(`${importedRecords.length} records imported to cloud.`);
+        await refreshAccount();
+      } catch (error) {
+        if (importedRecords.length) {
+          setRecords((current) => [...current, ...importedRecords]);
+          void refreshAccount();
+        }
+
+        const prefix = importedRecords.length
+          ? `${importedRecords.length} records imported before the error. `
+          : "Import failed. ";
+        setFormError(
+          `${prefix}${getErrorMessage(
+            error,
+            "Check the backup and your plan limit."
+          )}`
+        );
+      } finally {
+        setIsMutating(false);
       }
     };
     reader.readAsText(file);
@@ -293,32 +511,96 @@ export default function TrackerApp() {
               Track your first practice test
             </h2>
             <p className="mt-3 text-text-secondary max-w-2xl">
-              Enter raw scores, save the attempt, and watch your local progress
-              history build up in this browser. Scores are estimates for trend
-              tracking, not official predictions.
+              Enter raw scores, save the attempt, and follow your progress
+              across devices. Scores are estimates for trend tracking, not
+              official predictions.
             </p>
+            <div className="mt-4 flex items-center gap-2 text-sm">
+              {!isAuthLoaded || isDataLoading ? (
+                <>
+                  <LoaderCircle
+                    size={16}
+                    className="animate-spin text-text-secondary"
+                  />
+                  <span className="text-text-secondary">
+                    Loading your tracker...
+                  </span>
+                </>
+              ) : isSignedIn ? (
+                <>
+                  <Cloud size={16} className="text-accent-teal" />
+                  <span className="text-accent-teal">
+                    Cloud sync on
+                    {account?.limits.recordsPerSubject
+                      ? ` · ${subjectRecords.length}/${account.limits.recordsPerSubject} saved for ${selectedSubject.shortName}`
+                      : ""}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <LogIn size={16} className="text-accent-amber" />
+                  <span className="text-accent-amber">
+                    Preview mode · sign in to save and view history
+                  </span>
+                </>
+              )}
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <label className="inline-flex h-10 cursor-pointer items-center justify-center gap-2 rounded-button border border-border bg-surface px-5 py-2 text-sm font-medium text-text-primary transition-colors hover:bg-surface/80">
-              <Download size={16} className="rotate-180" />
-              Import JSON
-              <input
-                type="file"
-                accept="application/json,.json"
-                className="sr-only"
-                onChange={importJson}
-              />
-            </label>
-            <Button variant="secondary" className="gap-2" onClick={exportJson}>
+            {isSignedIn ? (
+              <label
+                className={`inline-flex h-10 items-center justify-center gap-2 rounded-button border border-border bg-surface px-5 py-2 text-sm font-medium text-text-primary transition-colors hover:bg-surface/80 ${
+                  isMutating
+                    ? "pointer-events-none cursor-not-allowed opacity-50"
+                    : "cursor-pointer"
+                }`}
+              >
+                <Download size={16} className="rotate-180" />
+                Import JSON
+                <input
+                  type="file"
+                  accept="application/json,.json"
+                  className="sr-only"
+                  onChange={importJson}
+                  disabled={isMutating}
+                />
+              </label>
+            ) : (
+              <Button
+                variant="secondary"
+                className="gap-2"
+                onClick={requestSignIn}
+                disabled={!isAuthLoaded}
+              >
+                <LogIn size={16} />
+                Sign In to Import
+              </Button>
+            )}
+            <Button
+              variant="secondary"
+              className="gap-2"
+              onClick={exportJson}
+              disabled={!isAuthLoaded || isMutating}
+            >
               <Download size={16} />
               Export JSON
             </Button>
-            <Button variant="ghost" className="gap-2" onClick={clearSubject}>
+            <Button
+              variant="ghost"
+              className="gap-2"
+              onClick={clearSubject}
+              disabled={!isAuthLoaded || isMutating}
+            >
               <RotateCcw size={16} />
               Clear Subject
             </Button>
-            <Button variant="ghost" className="gap-2" onClick={clearAllData}>
+            <Button
+              variant="ghost"
+              className="gap-2"
+              onClick={clearAllData}
+              disabled={!isAuthLoaded || isMutating}
+            >
               <Trash2 size={16} />
               Clear All Data
             </Button>
@@ -431,9 +713,23 @@ export default function TrackerApp() {
                 />
               </div>
 
-              <Button className="mt-5 w-full gap-2" onClick={saveRecord}>
-                <Plus size={16} />
-                Save Practice Test
+              <Button
+                className="mt-5 w-full gap-2"
+                onClick={saveRecord}
+                disabled={!isAuthLoaded || isDataLoading || isMutating}
+              >
+                {isMutating ? (
+                  <LoaderCircle size={16} className="animate-spin" />
+                ) : isSignedIn ? (
+                  <Plus size={16} />
+                ) : (
+                  <LogIn size={16} />
+                )}
+                {isMutating
+                  ? "Saving..."
+                  : isSignedIn
+                    ? "Save Practice Test"
+                    : "Sign In to Save"}
               </Button>
             </Panel>
           </div>
@@ -523,7 +819,13 @@ export default function TrackerApp() {
                     </AreaChart>
                   </ResponsiveContainer>
                 ) : (
-                  <EmptyState text="Save a practice test to draw your progress curve." />
+                  <EmptyState
+                    text={
+                      isSignedIn
+                        ? "Save a practice test to draw your progress curve."
+                        : "Sign in to save attempts and draw your progress curve."
+                    }
+                  />
                 )}
               </div>
             </Panel>
@@ -646,7 +948,15 @@ export default function TrackerApp() {
                   ))}
                 </div>
               ) : (
-                <EmptyState text="No saved attempts for this subject yet." />
+                <EmptyState
+                  text={
+                    isDataLoading
+                      ? "Loading saved attempts..."
+                      : isSignedIn
+                        ? "No saved attempts for this subject yet."
+                        : "Sign in to save attempts and view your history."
+                  }
+                />
               )}
             </Panel>
           </div>
@@ -675,6 +985,10 @@ function isExamRecord(value: unknown): value is ExamRecord {
     Boolean(record.topicScores) &&
     typeof record.topicScores === "object"
   );
+}
+
+function getErrorMessage(error: unknown, fallback: string) {
+  return error instanceof ClientApiError ? error.message : fallback;
 }
 
 function Panel({ children }: { children: React.ReactNode }) {

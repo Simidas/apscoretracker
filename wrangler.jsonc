@@ -11,6 +11,10 @@
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
 	},
+	"vars": {
+		"NEXT_PUBLIC_APP_URL": "https://apscoretracker.com",
+		"NEXT_PUBLIC_CLERK_JS_URL": "https://cdn.jsdelivr.net/npm/@clerk/clerk-js@6.25.8/dist/clerk.browser.js"
+	},
 	"d1_databases": [
 		{
 			"binding": "DB",

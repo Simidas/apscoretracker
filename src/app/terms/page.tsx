@@ -10,7 +10,7 @@ export default function TermsPage() {
         <h1 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mb-2">
           Terms of Service
         </h1>
-        <p className="text-text-secondary text-sm mb-12">Last updated: May 22, 2026</p>
+        <p className="text-text-secondary text-sm mb-12">Last updated: July 28, 2026</p>
 
         <div className="prose prose-invert max-w-none">
           <Section title="1. Acceptance of Terms">
@@ -21,13 +21,19 @@ export default function TermsPage() {
 
           <Section title="2. Service Description">
             <p>
-              AP Score Tracker is a free online tool that helps students track their AP exam practice test progress. All calculations are performed locally in your browser.
+              AP Score Tracker is an online tool that estimates AP practice scores
+              and helps students track progress. Score calculations are estimates;
+              signed-in users can save and sync tracker data through our cloud service.
             </p>
           </Section>
 
-          <Section title="3. No Account Required">
+          <Section title="3. Accounts and Free Usage">
             <p>
-              Our service does not require registration or login. Data is stored locally in your browser via localStorage.
+              You may use the score estimator without an account. Registration is
+              required to save records, view history, and sync progress. You are
+              responsible for activity under your account and for providing
+              accurate account information. Free-plan limits may apply and can
+              change as the service evolves.
             </p>
           </Section>
 
@@ -52,13 +58,22 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section title="7. Changes to Terms">
+          <Section title="7. Acceptable Use">
+            <p>
+              You may not misuse the service, attempt unauthorized access,
+              interfere with its operation, automate abusive traffic, or use it
+              in violation of applicable law. We may restrict access when needed
+              to protect users or the service.
+            </p>
+          </Section>
+
+          <Section title="8. Changes to Terms">
             <p>
               We may update these terms. Continued use constitutes acceptance of the updated terms.
             </p>
           </Section>
 
-          <Section title="8. Governing Law">
+          <Section title="9. Governing Law">
             <p>
               These Terms are governed by the laws of the State of California, United States, without regard to its conflict of law principles. Any disputes shall first be attempted to be resolved informally by contacting us at{" "}
               <a href="mailto:weldonz2026@gmail.com" className="text-accent-teal hover:underline">
@@ -68,7 +83,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section title="9. Contact">
+          <Section title="10. Contact">
             <p className="text-text-secondary">
               Email:{" "}
               <a href="mailto:weldonz2026@gmail.com" className="text-accent-teal hover:underline">

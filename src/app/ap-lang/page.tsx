@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle, BookOpen, TrendingUp, BarChart3 } from "lucide
 export const metadata: Metadata = {
   title: "AP Lang Score Tracker & Calculator — Free Practice Test Tracker",
   description:
-    "Free AP English Language score tracker. Calculate your AP Lang score from MCQ and FRQ, track progress across practice tests, and identify weak rhetorical areas. No signup required.",
+    "Free AP English Language score tracker. Calculate your AP Lang score from MCQ and FRQ, track progress across practice tests, and identify weak rhetorical areas. Try the estimator free; sign in to save and sync progress.",
   keywords: [
     "ap lang score tracker",
     "ap lang score calculator",
@@ -37,7 +37,7 @@ export default function ApLangPage() {
           </h1>
           <p className="mt-6 text-lg text-text-secondary leading-relaxed max-w-2xl mx-auto">
             Track your AP English Language practice test scores, visualize your progress,
-            and identify which rhetorical areas need more study. Completely free — no account needed.
+            and identify which rhetorical areas need more study. Try the estimator free, then sign in to save and sync your progress.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/tracker">

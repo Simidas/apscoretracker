@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle, Calculator, TrendingUp, BarChart3 } from "luci
 export const metadata: Metadata = {
   title: "AP Calculus BC Score Tracker & Calculator — Free Practice Test Tracker",
   description:
-    "Free AP Calculus BC score tracker. Calculate your Calc BC score from MCQ and FRQ, track progress across practice tests, and identify weak calculus areas. No signup required.",
+    "Free AP Calculus BC score tracker. Calculate your Calc BC score from MCQ and FRQ, track progress across practice tests, and identify weak calculus areas. Try the estimator free; sign in to save and sync progress.",
   keywords: [
     "ap calc bc score tracker",
     "ap calculus bc score calculator",
@@ -37,7 +37,7 @@ export default function ApCalcBcPage() {
           </h1>
           <p className="mt-6 text-lg text-text-secondary leading-relaxed max-w-2xl mx-auto">
             Track your AP Calculus BC practice test scores, visualize your progress,
-            and identify which calculus areas need more study. Completely free — no account needed.
+            and identify which calculus areas need more study. Try the estimator free, then sign in to save and sync your progress.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/tracker">

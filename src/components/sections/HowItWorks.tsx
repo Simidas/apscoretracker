@@ -21,7 +21,7 @@ const steps = [
     number: "03",
     title: "Track Your Progress",
     description:
-      "View your improvement curve and topic heatmap instantly. Save unlimited records.",
+      "Sign in to sync your improvement curve and topic heatmap. Free accounts can save 10 tests per subject.",
     icon: TrendingUp,
   },
 ];

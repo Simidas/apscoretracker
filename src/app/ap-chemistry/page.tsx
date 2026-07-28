@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle, FlaskConical, TrendingUp, BarChart3 } from "lu
 export const metadata: Metadata = {
   title: "AP Chemistry Score Tracker & Calculator — Free Practice Test Tracker",
   description:
-    "Free AP Chemistry score tracker. Calculate your AP Chem score from MCQ and FRQ, track progress across practice tests, and identify weak chemistry areas. No signup required.",
+    "Free AP Chemistry score tracker. Calculate your AP Chem score from MCQ and FRQ, track progress across practice tests, and identify weak chemistry areas. Try the estimator free; sign in to save and sync progress.",
   keywords: [
     "ap chemistry score tracker",
     "ap chem score calculator",
@@ -37,7 +37,7 @@ export default function ApChemistryPage() {
           </h1>
           <p className="mt-6 text-lg text-text-secondary leading-relaxed max-w-2xl mx-auto">
             Track your AP Chemistry practice test scores, visualize your progress,
-            and identify which chemistry areas need more study. Completely free — no account needed.
+            and identify which chemistry areas need more study. Try the estimator free, then sign in to save and sync your progress.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/tracker">

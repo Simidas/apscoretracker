@@ -222,7 +222,8 @@ export default function HowToTrackApProgressPage() {
               AP Score Tracker
             </Link>{" "}
             to save your scores, visualize your progress, and identify exactly what to study next.
-            No signup required — your data stays in your browser.
+            Try the estimator without an account, then sign in to save and sync
+            your history across devices.
           </p>
 
           {/* CTA */}

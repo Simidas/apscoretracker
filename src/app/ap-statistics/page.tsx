@@ -6,7 +6,7 @@ import { ArrowRight, CheckCircle, PieChart, TrendingUp, BarChart3 } from "lucide
 export const metadata: Metadata = {
   title: "AP Statistics Score Tracker & Calculator — Free Practice Test Tracker",
   description:
-    "Free AP Statistics score tracker. Calculate your AP Stats score from MCQ and FRQ, track progress across practice tests, and identify weak statistics areas. No signup required.",
+    "Free AP Statistics score tracker. Calculate your AP Stats score from MCQ and FRQ, track progress across practice tests, and identify weak statistics areas. Try the estimator free; sign in to save and sync progress.",
   keywords: [
     "ap statistics score tracker",
     "ap stats score calculator",
@@ -37,7 +37,7 @@ export default function ApStatisticsPage() {
           </h1>
           <p className="mt-6 text-lg text-text-secondary leading-relaxed max-w-2xl mx-auto">
             Track your AP Statistics practice test scores, visualize your progress,
-            and identify which statistics areas need more study. Completely free — no account needed.
+            and identify which statistics areas need more study. Try the estimator free, then sign in to save and sync your progress.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/tracker">

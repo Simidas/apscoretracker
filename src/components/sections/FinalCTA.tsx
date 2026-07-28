@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, CreditCard, UserX } from "lucide-react";
+import { ArrowRight, Shield, Cloud, CreditCard } from "lucide-react";
 
 export default function FinalCTA() {
   const openTracker = () => {
@@ -34,8 +34,8 @@ export default function FinalCTA() {
 
         <div className="mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-text-secondary">
           <span className="flex items-center gap-1.5">
-            <UserX size={14} className="text-accent-teal" />
-            No signup
+            <Cloud size={14} className="text-accent-teal" />
+            Cross-device sync
           </span>
           <span className="flex items-center gap-1.5">
             <CreditCard size={14} className="text-accent-teal" />

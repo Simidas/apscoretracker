@@ -19,11 +19,12 @@ export default function HeroSection() {
             </h1>
             <p className="mt-6 text-lg text-text-secondary leading-relaxed">
               See your score trends, spot weak topics, and know exactly what to
-              study next. No signup, no login — your data stays in your browser.
+              study next. Try the estimator instantly, then sign in to securely
+              sync your saved progress across devices.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="gap-2" onClick={openTracker}>
-                Start Tracking Free — No Signup Needed
+                Start Tracking Free
                 <ArrowRight size={18} />
               </Button>
               <Button variant="ghost" size="lg" className="cursor-pointer">
@@ -33,11 +34,11 @@ export default function HeroSection() {
             <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm text-text-secondary">
               <span className="flex items-center gap-1.5">
                 <CheckCircle size={14} className="text-accent-teal" />
-                Free forever
+                Free estimator
               </span>
               <span className="flex items-center gap-1.5">
                 <CheckCircle size={14} className="text-accent-teal" />
-                No account required
+                Secure cloud sync
               </span>
               <span className="flex items-center gap-1.5">
                 <CheckCircle size={14} className="text-accent-teal" />

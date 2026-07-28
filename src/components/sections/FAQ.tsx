@@ -7,12 +7,12 @@ const faqs = [
   {
     question: "Is AP Score Tracker free?",
     answer:
-      "Yes. The MVP is completely free with unlimited tracking, charts, and exports. We may add a Pro version later with PDF reports and study plans, but the core tracker will always be free.",
+      "Yes. You can estimate scores for free, and a Free account can save up to 10 practice tests per subject with charts, targets, and JSON export. A Pro plan with higher limits and advanced reports is planned.",
   },
   {
     question: "Do I need to create an account?",
     answer:
-      "No. We don't have accounts, logins, or passwords. Your data is stored locally in your browser. When you come back, your scores are still there — as long as you haven't cleared your browser data.",
+      "You can try the score estimator without an account. A free account is required to save practice tests, view history, and sync progress across devices.",
   },
   {
     question: "How accurate is the score prediction?",
@@ -27,7 +27,7 @@ const faqs = [
   {
     question: "Is my data private?",
     answer:
-      "Completely. Your scores never leave your device. We don't have a server that stores your data — everything lives in your browser's localStorage. We can't see it, and neither can anyone else.",
+      "Your account is handled by Clerk and your saved tracker data is stored in Cloudflare D1. Access is tied to your signed-in user ID, and we do not sell your personal information. See the Privacy Policy for details.",
   },
   {
     question: "Is this an official College Board tool?",

@@ -1,8 +1,8 @@
 # AP Score Tracker
 
-AP Score Tracker is a local-first practice test tracker for AP students. It helps students enter raw MCQ/FRQ scores, estimate an AP 1-5 score, save practice attempts in the browser, and review progress over time.
+AP Score Tracker is a cloud-synced practice test tracker for AP students. It helps students enter raw MCQ/FRQ scores, estimate an AP 1-5 score, save practice attempts, and review progress over time.
 
-The current production product is V1.1: no account system, no backend database, and no payment flow. V2.0 development has started with auth, API, D1, and billing scaffolding, but the tracker UI still uses the V1.1 local-first flow until Clerk, D1, and Stripe are configured and integrated end to end.
+The current development branch includes the V2 Clerk authentication and Cloudflare D1 data flow. Visitors can try score estimates without an account; signed-in users can save records, targets, and history to D1. Stripe billing remains under development.
 
 ## Current Product Scope
 
@@ -17,7 +17,7 @@ The current production product is V1.1: no account system, no backend database, 
 - Additional SEO subject pages for AP Biology, AP Calculus AB/BC, AP Chemistry, AP Lang, AP Physics 1, AP Psychology, AP Statistics, and AP US History
 - Raw MCQ + FRQ score input with weighted estimated AP score
 - Per-subject target score, gap display, and study tips
-- Per-subject history list stored in the browser
+- Clerk-authenticated per-subject history stored in Cloudflare D1
 - Recharts progress curve with target reference line
 - Topic accuracy sliders and average topic strength view
 - JSON import/export
@@ -37,22 +37,23 @@ The score weights and thresholds are rough progress-tracking estimates. They are
 - Recharts 3.8
 - Lucide React icons
 - Local font files via `next/font/local`
-- Browser `localStorage` for V1.1 tracker data
+- Clerk authentication and account controls
+- Cloudflare D1 for signed-in tracker records and targets
 - Cloudflare Workers deployment via `@opennextjs/cloudflare`
 - Wrangler CLI
 - GitHub Actions deploy on push to `main`
-- Clerk and Stripe SDKs for V2 development
+- Stripe SDKs and billing API scaffolding for V2 development
 
 ## Data Storage
 
-V1.1 stores user-entered tracker data only in the browser:
+Signed-in tracker data is stored in Cloudflare D1:
 
-- `apst_records`: saved practice test records
-- `apst_targets`: per-subject target AP scores
+- `users`: Clerk user mapping and subscription state
+- `exam_records`: saved practice test records
+- `target_scores`: per-subject target AP scores
+- `stripe_events`: billing webhook idempotency
 
-There is no server-side score storage in the current code. V2.0 plans to replace this with Clerk-authenticated D1 storage for logged-in users.
-
-V2 API and billing scaffolding now exists under `/api/*`, but it requires Clerk environment variables and a Cloudflare D1 `DB` binding before it can be exercised.
+The V1 `apst_records` and `apst_targets` localStorage keys are no longer written by the V2 tracker. Existing users can export their V1 data and import the JSON backup after signing in.
 
 ## Development
 
@@ -65,7 +66,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-Copy `.env.example` to `.env.local` and fill Clerk/Stripe values when working on V2 auth or billing.
+Use `clerk env pull --file .env.local` for local Clerk development. Fill the Stripe values from `.env.example` when working on billing.
 
 ## Build
 
@@ -93,7 +94,7 @@ npm run deploy
 
 Deployment config:
 
-- `wrangler.jsonc`: Worker entry, assets binding, compatibility flags, image binding
+- `wrangler.jsonc`: Worker entry, assets, D1, compatibility flags, and image bindings
 - `open-next.config.ts`: OpenNext Cloudflare adapter config
 - `.github/workflows/deploy.yml`: `npm ci` → `npx opennextjs-cloudflare build` → `wrangler deploy`
 
@@ -107,8 +108,8 @@ Required GitHub secrets:
 - `DEVELOPMENT.md`: current implementation and deployment notes
 - `PRD.md`: original MVP product definition, now partly historical
 - `docs/V1.1-PRD.md`: V1.1 feature scope
-- `docs/V2.0-PRD.md`: next-stage product plan for auth, D1, and subscriptions
-- `docs/compliance-report.md`: current V1 local-first compliance notes, to be updated for V2
+- `docs/V2.0-PRD.md`: V2 implementation plan for auth, D1, limits, and subscriptions
+- `docs/compliance-report.md`: historical V1 audit; the live Privacy and Terms pages reflect the V2 data flow
 - `docs/pricing-report.md`: pricing research, partly historical
 
 ## Notes

@@ -2,8 +2,8 @@
 
 > 项目地址：https://github.com/Simidas/apscoretracker  
 > 线上地址：https://apscoretracker.com  
-> 当前阶段：V1.1 已实现，V2.0 准备开发  
-> 最后更新：2026-06-26
+> 当前阶段：V2.0 Auth + D1 云端追踪已联调，Stripe 待开发
+> 最后更新：2026-07-28
 
 ---
 
@@ -11,15 +11,14 @@
 
 AP Score Tracker 是一个面向 AP 考生的在线分数追踪工具。它不是单次算分器，而是让学生持续记录多次模考，观察分数趋势，定位薄弱 topic，并据此安排下一轮复习。
 
-当前线上产品体验仍是 **V1.1 local-first 版本**：
+当前代码已进入 **V2.0 云端追踪阶段**：
 
-- 不需要注册或登录
-- 不接入后端数据库
-- 不接入支付系统
-- 用户输入的模考数据保存在浏览器 `localStorage`
-- 部署目标是 Cloudflare Workers，通过 `@opennextjs/cloudflare` 构建
-
-V2.0 的目标是增加账号、云端同步和订阅付费。V2.0 已开始基础开发：依赖、middleware、登录页面、账户页、D1 migration、records/targets API、billing API 和 Stripe webhook 骨架已经加入；TrackerApp 仍未切换到云端数据流。
+- Clerk 已完成 development instance 联调
+- 未登录用户可以试算，但不能保存或查看历史
+- 登录用户的 records、targets 和账户状态通过 API 存储到 Cloudflare D1
+- Free 用户由服务端限制为每科 10 条记录
+- Stripe billing API 和 webhook 骨架已存在，支付 UI 尚未接入
+- 部署目标保持 Cloudflare Workers，通过 `@opennextjs/cloudflare` 构建
 
 ### 一句话定位
 
@@ -48,9 +47,9 @@ V2.0 的目标是增加账号、云端同步和订阅付费。V2.0 已开始基�
 | 图表 | Recharts | 3.8.1 | 进步曲线、目标线 |
 | 图标 | Lucide React | 1.16.0 | Navigation、CTA、功能区块图标 |
 | 字体 | Geist 本地字体文件 | `next/font/local` | 文件位于 `src/app/fonts` |
-| 存储 | Browser localStorage | V1.1 唯一业务数据存储 | `apst_records`、`apst_targets` |
+| 存储 | Cloudflare D1 | V2 已联调 | `users`、`exam_records`、`target_scores`、`stripe_events` |
 | 分析 | Plausible script | 已在 `layout.tsx` 注入 | 当前使用 `plausible.shipsolo.io` 脚本 |
-| Auth | Clerk | V2 骨架已接入 | 需要环境变量后联调 |
+| Auth | Clerk | development 已联调 | 生产实例和 secrets 上线前配置 |
 | Billing | Stripe | V2 骨架已接入 | Elements 为目标，Checkout 为备选 |
 | 部署 | Cloudflare Workers | Wrangler + OpenNext | 非 Cloudflare Pages 静态导出 |
 | 构建适配 | `@opennextjs/cloudflare` | 1.19.11 | 生成 `.open-next/worker.js` |
@@ -121,12 +120,12 @@ apscoretracker/
 │   │   │   ├── FAQ.tsx
 │   │   │   ├── FinalCTA.tsx
 │   │   │   ├── Footer.tsx
-│   │   │   └── TrackerApp.tsx  # V1.1 核心应用
+│   │   │   └── TrackerApp.tsx  # V2 试算 + 云端追踪应用
 │   │   └── ui/
 │   │       └── button.tsx
 │   └── lib/
-│       ├── tracker-data.ts     # 科目、分数计算、localStorage target helpers
-│       ├── v2/                 # V2 API/data/billing helpers
+│       ├── tracker-data.ts     # 科目、分数模型与计算逻辑
+│       ├── v2/                 # V2 browser client、API、D1、billing helpers
 │       └── utils.ts            # cn()
 ├── next.config.mjs             # Next 配置 + OpenNext dev 初始化
 ├── wrangler.jsonc              # Cloudflare Workers 配置
@@ -157,22 +156,20 @@ apscoretracker/
 - 首屏展示 AP progress tracker 价值
 - 内嵌模拟进步曲线
 - CTA 指向 `/tracker`
-- FAQ 强调 local-first 和无账号门槛
+- 首页说明免费试算、登录保存和跨设备同步
 
 ### 4.2 追踪器 `/tracker`
 
-核心闭环：
+当前核心闭环：
 
 ```text
-选择科目
+未登录试算 / 登录用户输入分数
   ↓
-输入 MCQ / FRQ 原始分
+POST /api/records
   ↓
-填写 topic accuracy 和 notes
+Clerk session + Free/Pro limit 校验
   ↓
-计算 totalPercent 与 AP 1-5 估分
-  ↓
-保存到 localStorage
+D1 保存并由服务端重新计算分数
   ↓
 历史列表、趋势图、目标分数、学习建议、topic strength 更新
 ```
@@ -183,16 +180,15 @@ apscoretracker/
 - MCQ/FRQ 输入校验与 clamp
 - `calculateTotalPercent()` 加权百分比
 - `calculateApScore()` 阈值映射
-- 目标分数 `apst_targets`
+- 目标分数通过 `/api/targets` 存储到 D1
 - 目标差距显示
 - study tips 基于最低 topic average 和目标分差生成
 - Recharts AreaChart 进步曲线
 - ReferenceLine 显示目标 AP score
 - JSON export / import
-- 删除单条记录、清空全部记录
+- 删除单条记录、清空科目、清空全部云端记录
 - 打印友好样式
-
-注意：V2 API 已经存在，但当前 `TrackerApp` 仍走 V1.1 localStorage。前端数据流切换是后续里程碑。
+- 匿名态不产生新的 localStorage 数据，保存/导入/导出入口引导登录
 
 ### 4.3 SEO 页面
 
@@ -219,12 +215,16 @@ apscoretracker/
 
 ## 5. 当前数据模型
 
-### 5.1 localStorage keys
+### 5.1 D1 tables
 
-| Key | 用途 | 数据形态 |
-|---|---|---|
-| `apst_records` | 用户保存的模考记录 | `ExamRecord[]` JSON |
-| `apst_targets` | 每科目标 AP 分数 | `Record<subjectId, 1 | 2 | 3 | 4 | 5>` JSON |
+| Table | 用途 |
+|---|---|
+| `users` | Clerk user 与订阅状态 |
+| `exam_records` | 用户模考记录和 soft-delete 状态 |
+| `target_scores` | 每科目标 AP 分数 |
+| `stripe_events` | Stripe webhook 幂等 |
+
+V1 的 `apst_records` 和 `apst_targets` 只作为历史格式保留；V2 不再写入这两个 localStorage key。用户可通过 JSON import 自助迁移。
 
 ### 5.2 TypeScript 模型
 
@@ -408,6 +408,7 @@ npm run cf-typegen
 | 2026-05-23 | 迁移到 `@opennextjs/cloudflare` | 面向 Cloudflare Workers 部署 |
 | 2026-06-26 | 明确 V2.0 为下一阶段 | Clerk + D1 + Stripe 仍未进入代码实现 |
 | 2026-06-26 | V2 基础开发启动 | 增加 Clerk/Stripe 依赖、middleware、D1 migration、API/billing 骨架 |
+| 2026-07-28 | Clerk + D1 云端追踪联调 | 登录用户 records/targets 走 D1，匿名态只试算 |
 
 ---
 
@@ -422,14 +423,15 @@ npm run cf-typegen
 - [ ] 明确 SEO 页面与 Tracker 实际支持科目的关系
 - [ ] 更新 V1 隐私/条款中 Cloudflare Pages 的历史表述
 
-### 10.2 V2.0 开发前置
+### 10.2 V2.0 后续
 
-- [ ] 确认 V2 是否强制登录保存数据
-- [ ] 确认 Free/Pro 限制口径
-- [ ] 确认 D1 schema、迁移方式和本地 dev 数据库
+- [x] 确认 V2 强制登录保存数据
+- [x] 确认 Free 每科 10 条记录
+- [x] 确认 D1 schema、迁移方式和本地 dev 数据库
 - [ ] 确认 Stripe 是 Checkout 还是 Elements
-- [ ] 确认 V1 localStorage 数据是否迁移
-- [ ] 更新合规文档、隐私政策、服务条款
+- [x] V1 localStorage 通过 JSON import 自助迁移，自动迁移延后
+- [x] 更新线上隐私政策和服务条款
+- [ ] 重写 `docs/compliance-report.md` V2 合规审查
 
 ---
 

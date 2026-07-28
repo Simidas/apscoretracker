@@ -5,6 +5,7 @@ import {
   assertString,
   assertTargetScore,
   jsonResponse,
+  readJsonObject,
 } from "@/lib/v2/api";
 import { requireUserId } from "@/lib/v2/auth";
 import { listTargetScores, upsertTargetScore } from "@/lib/v2/records";
@@ -23,7 +24,7 @@ export async function GET() {
 export async function PUT(request: NextRequest) {
   try {
     const userId = await requireUserId();
-    const payload = await request.json();
+    const payload = await readJsonObject(request);
     const subjectId = assertString(payload.subjectId, "subjectId");
     const targetScore = assertTargetScore(payload.targetScore);
 

@@ -11,6 +11,13 @@
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
 	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "apscoretracker-prod",
+			"database_id": "6fd10527-5038-4a1c-b343-1517ab00f04e"
+		}
+	],
 	"services": [
 		{
 			// Self-reference service binding, the service name must match the worker name

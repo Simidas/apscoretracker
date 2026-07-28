@@ -1,6 +1,10 @@
 import type { NextRequest } from "next/server";
 
-import { apiErrorResponse, jsonResponse } from "@/lib/v2/api";
+import {
+  apiErrorResponse,
+  jsonResponse,
+  readJsonObject,
+} from "@/lib/v2/api";
 import { getOrCreateCurrentUser } from "@/lib/v2/auth";
 import {
   createCheckoutSession,
@@ -11,7 +15,7 @@ import {
 export async function POST(request: NextRequest) {
   try {
     const user = await getOrCreateCurrentUser();
-    const payload = await request.json();
+    const payload = await readJsonObject(request);
     const plan = parseBillingPlan(payload.plan);
 
     if (process.env.STRIPE_BILLING_MODE === "checkout") {

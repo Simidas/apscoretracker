@@ -5,6 +5,8 @@ import {
   assertNumber,
   assertString,
   jsonResponse,
+  optionalNumberRecord,
+  readJsonObject,
 } from "@/lib/v2/api";
 import { getOrCreateCurrentUser, requireUserId } from "@/lib/v2/auth";
 import { createRecord, listRecords } from "@/lib/v2/records";
@@ -24,7 +26,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const user = await getOrCreateCurrentUser();
-    const payload = await request.json();
+    const payload = await readJsonObject(request);
     const subjectId = assertString(payload.subjectId, "subjectId");
     const mcqScore = assertNumber(payload.mcqScore, "mcqScore");
     const frqScore = assertNumber(payload.frqScore, "frqScore");
@@ -33,10 +35,7 @@ export async function POST(request: NextRequest) {
       date: typeof payload.date === "string" ? payload.date : undefined,
       mcqScore,
       frqScore,
-      topicScores:
-        payload.topicScores && typeof payload.topicScores === "object"
-          ? payload.topicScores
-          : undefined,
+      topicScores: optionalNumberRecord(payload.topicScores, "topicScores"),
       notes: typeof payload.notes === "string" ? payload.notes : undefined,
     });
 

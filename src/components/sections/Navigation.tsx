@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { AuthControls } from "@/components/auth/AuthControls";
-import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 export default function Navigation() {
@@ -104,15 +103,12 @@ export default function Navigation() {
                 {link.label}
               </a>
             ))}
-            <Button
-              className="w-full mt-2"
-              onClick={() => {
-                setMobileOpen(false);
-                window.location.href = "/tracker";
-              }}
-            >
-              Start Tracking — Free
-            </Button>
+            <div className="pt-2">
+              <AuthControls
+                mobile
+                onAction={() => setMobileOpen(false)}
+              />
+            </div>
           </div>
         </div>
       )}

@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "ap bio practice test tracker",
     "track ap biology scores",
   ],
+  alternates: { canonical: "/ap-biology" },
   openGraph: {
     title: "AP Biology Score Tracker — Track Every Practice Test",
     description:

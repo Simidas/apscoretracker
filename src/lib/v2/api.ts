@@ -5,6 +5,7 @@ export type ApiErrorCode =
   | "INVALID_INPUT"
   | "LIMIT_REACHED"
   | "NOT_FOUND"
+  | "FEATURE_DISABLED"
   | "CONFIGURATION_ERROR"
   | "SERVER_ERROR";
 

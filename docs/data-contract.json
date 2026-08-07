@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AP Score Tracker V2 API Contract",
+  "version": "2026-08-06",
+  "auth": "Clerk session cookie",
+  "plans": {
+    "free": { "recordsPerSubject": 10, "subjects": 5 },
+    "pro": { "status": "disabled", "enabledBy": "BILLING_ENABLED=true" }
+  },
+  "endpoints": {
+    "GET /api/me": { "auth": true, "response": "account, subscription, usage, limits" },
+    "GET /api/records": { "auth": true, "response": "records[]" },
+    "POST /api/records": { "auth": true, "errors": ["INVALID_INPUT", "LIMIT_REACHED"] },
+    "DELETE /api/records/:id": { "auth": true, "response": "ok" },
+    "GET /api/targets": { "auth": true, "response": "targets" },
+    "PUT /api/targets": { "auth": true, "errors": ["INVALID_INPUT"] },
+    "DELETE /api/account": { "auth": true, "effect": "permanent account and tracker data deletion" },
+    "POST /api/billing/subscribe": { "auth": true, "status": "disabled", "error": "FEATURE_DISABLED" },
+    "POST /api/billing/portal": { "auth": true, "status": "disabled", "error": "FEATURE_DISABLED" },
+    "POST /api/stripe/webhook": { "auth": "Stripe signature when enabled", "status": "disabled" }
+  },
+  "errorEnvelope": { "error": { "code": "string", "message": "string" } }
+}

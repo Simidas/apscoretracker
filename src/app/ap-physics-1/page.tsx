@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "ap physics 1 practice test tracker",
     "track ap physics 1 scores",
   ],
+  robots: { index: false, follow: true },
   openGraph: {
     title: "AP Physics 1 Score Tracker — Track Every Practice Test",
     description:

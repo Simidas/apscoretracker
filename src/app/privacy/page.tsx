@@ -1,6 +1,7 @@
 export const metadata = {
   title: "Privacy Policy — AP Score Tracker",
   description: "Privacy Policy for AP Score Tracker. Learn how we handle your data.",
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPage() {
@@ -10,7 +11,7 @@ export default function PrivacyPage() {
         <h1 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mb-2">
           Privacy Policy
         </h1>
-        <p className="text-text-secondary text-sm mb-12">Last updated: July 28, 2026</p>
+        <p className="text-text-secondary text-sm mb-12">Last updated: August 6, 2026</p>
 
         <div className="prose prose-invert max-w-none">
           <Section title="1. Introduction">
@@ -63,6 +64,12 @@ export default function PrivacyPage() {
                   Privacy Policy
                 </a>
               </li>
+              <li>
+                <strong className="text-text-primary">Stripe:</strong> Billing
+                integration is present but disabled while Pro is unavailable.
+                If paid plans are enabled, Stripe will process payment and
+                subscription information under its own privacy policy.
+              </li>
             </ul>
           </Section>
 
@@ -83,8 +90,9 @@ export default function PrivacyPage() {
           <Section title="6. Your Rights">
             <p className="text-text-secondary">
               You can remove tracker records using the controls in the app,
-              export your records as JSON, or contact us to request access,
-              correction, account deletion, or permanent data deletion.
+              export your records as JSON or CSV, or permanently delete your
+              account and saved data from the Account page. You may also contact
+              us to request access, correction, or deletion assistance.
             </p>
             <p className="mt-3 text-text-secondary">
               <strong className="text-text-primary">GDPR Rights (EU/UK users):</strong>{" "}

@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "apush practice test tracker",
     "track apush scores",
   ],
+  alternates: { canonical: "/ap-us-history" },
   openGraph: {
     title: "AP US History Score Tracker — Track Every Practice Test",
     description:

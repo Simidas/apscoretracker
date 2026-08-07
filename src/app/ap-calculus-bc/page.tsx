@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "ap calculus bc practice test tracker",
     "track ap calc bc scores",
   ],
+  robots: { index: false, follow: true },
   openGraph: {
     title: "AP Calculus BC Score Tracker — Track Every Practice Test",
     description:

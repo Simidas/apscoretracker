@@ -6,6 +6,7 @@ export const metadata = {
   title: "Tracker — AP Score Tracker",
   description:
     "Enter AP practice test scores, sync attempts securely, and track progress by subject.",
+  alternates: { canonical: "/tracker" },
 };
 
 export default function TrackerPage() {

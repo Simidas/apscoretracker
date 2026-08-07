@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "ap stats practice test tracker",
     "track ap statistics scores",
   ],
+  robots: { index: false, follow: true },
   openGraph: {
     title: "AP Statistics Score Tracker — Track Every Practice Test",
     description:

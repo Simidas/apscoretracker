@@ -1,6 +1,7 @@
 export const metadata = {
   title: "Terms of Service — AP Score Tracker",
   description: "Terms of Service for AP Score Tracker.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {
@@ -10,7 +11,7 @@ export default function TermsPage() {
         <h1 className="font-display text-3xl sm:text-4xl font-bold text-text-primary mb-2">
           Terms of Service
         </h1>
-        <p className="text-text-secondary text-sm mb-12">Last updated: July 28, 2026</p>
+        <p className="text-text-secondary text-sm mb-12">Last updated: August 6, 2026</p>
 
         <div className="prose prose-invert max-w-none">
           <Section title="1. Acceptance of Terms">
@@ -46,19 +47,28 @@ export default function TermsPage() {
             </ul>
           </Section>
 
-          <Section title="5. Intellectual Property">
+          <Section title="5. Account deletion">
+            <p>
+              You may permanently delete your account from the Account page.
+              Deletion removes saved tracker records and targets and cannot be
+              undone. Limited backup or security records may remain temporarily
+              where required to operate or protect the service.
+            </p>
+          </Section>
+
+          <Section title="6. Intellectual Property">
             <p>
               The scoring curves and exam formats are based on publicly available information. Our code and interface are our property.
             </p>
           </Section>
 
-          <Section title="6. Limitation of Liability">
+          <Section title="7. Limitation of Liability">
             <p>
               We provide this tool &quot;as is&quot; without warranties. We are not liable for any decisions you make based on the tool&apos;s output.
             </p>
           </Section>
 
-          <Section title="7. Acceptable Use">
+          <Section title="8. Acceptable Use">
             <p>
               You may not misuse the service, attempt unauthorized access,
               interfere with its operation, automate abusive traffic, or use it
@@ -67,13 +77,13 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section title="8. Changes to Terms">
+          <Section title="9. Changes to Terms">
             <p>
               We may update these terms. Continued use constitutes acceptance of the updated terms.
             </p>
           </Section>
 
-          <Section title="9. Governing Law">
+          <Section title="10. Governing Law">
             <p>
               These Terms are governed by the laws of the State of California, United States, without regard to its conflict of law principles. Any disputes shall first be attempted to be resolved informally by contacting us at{" "}
               <a href="mailto:weldonz2026@gmail.com" className="text-accent-teal hover:underline">
@@ -83,7 +93,7 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section title="10. Contact">
+          <Section title="11. Contact">
             <p className="text-text-secondary">
               Email:{" "}
               <a href="mailto:weldonz2026@gmail.com" className="text-accent-teal hover:underline">

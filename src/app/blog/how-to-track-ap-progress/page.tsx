@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "ap exam study plan",
     "track ap scores",
   ],
+  alternates: { canonical: "/blog/how-to-track-ap-progress" },
   openGraph: {
     title: "How to Track AP Exam Progress Effectively",
     description:

@@ -2,8 +2,8 @@
 
 > 项目地址：https://github.com/Simidas/apscoretracker  
 > 线上地址：https://apscoretracker.com  
-> 当前阶段：V2.0 Auth + D1 云端追踪已联调，Stripe 待开发
-> 最后更新：2026-07-28
+> 当前阶段：V2.0 免费云同步版返修与 QA；Stripe/Pro 延后
+> 最后更新：2026-08-06
 
 ---
 
@@ -17,7 +17,7 @@ AP Score Tracker 是一个面向 AP 考生的在线分数追踪工具。它不�
 - 未登录用户可以试算，但不能保存或查看历史
 - 登录用户的 records、targets 和账户状态通过 API 存储到 Cloudflare D1
 - Free 用户由服务端限制为每科 10 条记录
-- Stripe billing API 和 webhook 骨架已存在，支付 UI 尚未接入
+- Stripe billing API 和 webhook 骨架已存在，但 `BILLING_ENABLED=false`，不属于当前免费版发布范围
 - 部署目标保持 Cloudflare Workers，通过 `@opennextjs/cloudflare` 构建
 
 ### 一句话定位
@@ -423,15 +423,15 @@ npm run cf-typegen
 - [ ] 明确 SEO 页面与 Tracker 实际支持科目的关系
 - [ ] 更新 V1 隐私/条款中 Cloudflare Pages 的历史表述
 
-### 10.2 V2.0 后续
+### 10.2 V2.0 免费版收尾
 
 - [x] 确认 V2 强制登录保存数据
 - [x] 确认 Free 每科 10 条记录
 - [x] 确认 D1 schema、迁移方式和本地 dev 数据库
-- [ ] 确认 Stripe 是 Checkout 还是 Elements
+- [x] 当前发布不启用 Stripe；付费方案延后到独立版本
 - [x] V1 localStorage 通过 JSON import 自助迁移，自动迁移延后
 - [x] 更新线上隐私政策和服务条款
-- [ ] 重写 `docs/compliance-report.md` V2 合规审查
+- [x] 重写 `docs/compliance-report.md` V2 合规审查
 
 ---
 

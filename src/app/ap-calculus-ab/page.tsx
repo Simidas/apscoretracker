@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "ap calculus ab practice test tracker",
     "track ap calc ab scores",
   ],
+  alternates: { canonical: "/ap-calculus-ab" },
   openGraph: {
     title: "AP Calculus AB Score Tracker — Track Every Practice Test",
     description:

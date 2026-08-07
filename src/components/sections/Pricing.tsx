@@ -30,10 +30,10 @@ const plans = [
     description: "Heavy users who want advanced features",
     features: [
       "Everything in Free",
-      "PDF progress reports",
-      "Target score goal tracker",
-      "Personalized study plan",
-      "Print-friendly layouts",
+      "Higher saved-test limits",
+      "Advanced PDF progress reports",
+      "Expanded subject coverage",
+      "Advanced study insights",
       "Priority support",
     ],
     cta: "Join Waitlist",
@@ -123,7 +123,7 @@ export default function Pricing() {
         </div>
 
         <p className="text-center mt-8 text-sm text-text-secondary">
-          No credit card • No trial period • No ads
+          Free plan requires no credit card • Pro is not available yet
         </p>
       </div>
     </section>

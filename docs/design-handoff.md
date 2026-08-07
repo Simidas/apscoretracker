@@ -1,5 +1,7 @@
 # AP Score Tracker — 站点设计交付包
 
+> 2026-08-07 implementation update：当前 Next.js UI 是发布设计真源；已补 `src/app/opengraph-image.tsx`，并保存 `docs/screens/home-desktop.jpg` 与 `docs/screens/tracker-mobile-375.jpg`。以下早期 Prompt/占位清单保留为历史设计依据。
+
 ---
 
 ## 1. 竞品视觉分析
@@ -360,8 +362,8 @@ deliverables/ap-score-tracker/
 - `prompts/seo-page-template.md` — SEO 子页复用规则
 
 ### 截图 / 设计稿
-- [待生成] `screens/landing-desktop.png`
-- [待生成] `screens/landing-mobile.png`
+- [x] `screens/home-desktop.jpg`
+- [x] `screens/tracker-mobile-375.jpg`
 
 ### HTML / CSS 参考
 - [待开发] `html/landing-desktop.html`
@@ -443,13 +445,13 @@ deliverables/ap-score-tracker/
 
 ## 6. 需要替换 / 补充的内容
 
-- [ ] 产品真实截图（Recharts 图表实现后替换 Hero mockup）
+- [x] 产品真实截图（本地 OpenNext 浏览器 QA）
 - [ ] Hero 图（可用真实截图替代）
 - [ ] Logo SVG（按提示词生成）
-- [ ] OG Image（按提示词生成）
-- [ ] Privacy / Terms 链接（合规页面开发后更新）
-- [ ] CTA 链接（"/app" 或 "#tracker" 锚点）
-- [ ] Plausible 统计代码（部署时插入）
+- [x] OG Image（`src/app/opengraph-image.tsx`）
+- [x] Privacy / Terms 链接
+- [x] CTA 指向 `/tracker`
+- [x] Plausible 统计代码
 
 ---
 

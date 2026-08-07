@@ -16,6 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://apscoretracker.com"),
   title: "AP Score Tracker — Track Your Practice Test Progress Free",
   description:
     "Free AP score tracker that visualizes progress across practice tests. Estimate instantly, then sign in to securely sync trends, targets, and weak topics.",

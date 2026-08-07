@@ -5,18 +5,14 @@ const clerkConfigured = Boolean(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY && process.env.CLERK_SECRET_KEY
 );
 
-const isProtectedRoute = createRouteMatcher([
-  "/account(.*)",
-  "/api/me(.*)",
-  "/api/records(.*)",
-  "/api/targets(.*)",
-  "/api/billing(.*)",
-]);
+const isProtectedPage = createRouteMatcher(["/account(.*)"]);
 
 const middleware = clerkConfigured
   ? clerkMiddleware(async (auth, req) => {
-      if (isProtectedRoute(req)) {
-        await auth.protect();
+      if (isProtectedPage(req)) {
+        await auth.protect({
+          unauthenticatedUrl: new URL("/sign-in", req.url).toString(),
+        });
       }
     })
   : () => NextResponse.next();

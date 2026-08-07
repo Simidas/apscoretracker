@@ -1,6 +1,7 @@
 import type { NextRequest } from "next/server";
 
 import {
+  ApiError,
   apiErrorResponse,
   jsonResponse,
   readJsonObject,
@@ -14,6 +15,14 @@ import {
 
 export async function POST(request: NextRequest) {
   try {
+    if (process.env.BILLING_ENABLED !== "true") {
+      throw new ApiError(
+        503,
+        "FEATURE_DISABLED",
+        "Pro billing is not available yet."
+      );
+    }
+
     const user = await getOrCreateCurrentUser();
     const payload = await readJsonObject(request);
     const plan = parseBillingPlan(payload.plan);

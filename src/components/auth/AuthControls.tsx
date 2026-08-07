@@ -92,6 +92,17 @@ function ConfiguredAuthControls({ mobile, onAction }: AuthControlsProps) {
           >
             Tracker
           </Button>
+          <Button
+            size="sm"
+            variant="secondary"
+            className={mobile ? "flex-1" : undefined}
+            onClick={() => {
+              onAction?.();
+              window.location.href = "/account";
+            }}
+          >
+            Account
+          </Button>
           <UserButton />
         </>
       )}

@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "ap chem practice test tracker",
     "track ap chemistry scores",
   ],
+  robots: { index: false, follow: true },
   openGraph: {
     title: "AP Chemistry Score Tracker — Track Every Practice Test",
     description:

@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "ap psych practice test tracker",
     "track ap psych scores",
   ],
+  alternates: { canonical: "/ap-psych" },
   openGraph: {
     title: "AP Psych Score Tracker — Track Every Practice Test",
     description:

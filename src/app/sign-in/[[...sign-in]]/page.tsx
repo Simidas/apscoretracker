@@ -2,6 +2,11 @@ import { SignIn } from "@clerk/nextjs";
 
 import { isClerkConfigured } from "@/components/auth/ClerkAppProvider";
 
+export const metadata = {
+  title: "Sign in — AP Score Tracker",
+  robots: { index: false, follow: false },
+};
+
 export default function SignInPage() {
   if (!isClerkConfigured()) {
     return <AuthConfigurationNotice />;

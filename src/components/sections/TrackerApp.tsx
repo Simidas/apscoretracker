@@ -52,6 +52,31 @@ const dateFormatter = new Intl.DateTimeFormat("en", {
 
 const clerkConfigured = Boolean(process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 
+function escapeCsvCell(value: string | number) {
+  const text = String(value);
+  return /[",\n]/.test(text) ? `"${text.replace(/"/g, '""')}"` : text;
+}
+
+function downloadFile(content: string, type: string, filename: string) {
+  const blob = new Blob([content], { type });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function trackEvent(name: string, props?: Record<string, string | number>) {
+  const plausible = (
+    window as typeof window & {
+      plausible?: (event: string, options?: { props?: typeof props }) => void;
+    }
+  ).plausible;
+
+  plausible?.(name, props ? { props } : undefined);
+}
+
 export default function TrackerApp() {
   if (!clerkConfigured) {
     return (
@@ -318,6 +343,7 @@ function TrackerExperience({
       setFrqScore("");
       setNotes("");
       setStatusMessage("Practice test saved to the cloud.");
+      trackEvent("Practice Test Saved", { subject: selectedSubjectId });
       await refreshAccount();
     } catch (error) {
       setFormError(getErrorMessage(error, "Unable to save practice test."));
@@ -423,6 +449,41 @@ function TrackerExperience({
     link.download = "ap-score-tracker-records.json";
     link.click();
     URL.revokeObjectURL(url);
+  }
+
+  function exportCsv() {
+    if (!isSignedIn) {
+      requestSignIn();
+      return;
+    }
+
+    const headers = [
+      "date",
+      "subject",
+      "mcq_score",
+      "frq_score",
+      "total_percent",
+      "ap_score",
+      "notes",
+    ];
+    const rows = records.map((record) => [
+      record.date,
+      record.subjectId,
+      record.mcqScore,
+      record.frqScore,
+      record.totalPercent,
+      record.apScore,
+      record.notes ?? "",
+    ]);
+    const csv = [headers, ...rows]
+      .map((row) => row.map(escapeCsvCell).join(","))
+      .join("\n");
+
+    downloadFile(
+      csv,
+      "text/csv;charset=utf-8",
+      "ap-score-tracker-records.csv"
+    );
   }
 
   function importJson(event: ChangeEvent<HTMLInputElement>) {
@@ -585,6 +646,15 @@ function TrackerExperience({
             >
               <Download size={16} />
               Export JSON
+            </Button>
+            <Button
+              variant="secondary"
+              className="gap-2"
+              onClick={exportCsv}
+              disabled={!isAuthLoaded || isMutating}
+            >
+              <Download size={16} />
+              Export CSV
             </Button>
             <Button
               variant="ghost"

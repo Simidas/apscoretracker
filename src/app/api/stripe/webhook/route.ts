@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 
-import { apiErrorResponse, jsonResponse } from "@/lib/v2/api";
+import { ApiError, apiErrorResponse, jsonResponse } from "@/lib/v2/api";
 import {
   constructStripeWebhookEvent,
   handleStripeWebhook,
@@ -8,6 +8,14 @@ import {
 
 export async function POST(request: NextRequest) {
   try {
+    if (process.env.BILLING_ENABLED !== "true") {
+      throw new ApiError(
+        503,
+        "FEATURE_DISABLED",
+        "Stripe billing is not enabled."
+      );
+    }
+
     const payload = await request.text();
     const signature = request.headers.get("stripe-signature");
     const event = await constructStripeWebhookEvent(payload, signature);

@@ -1,7 +1,14 @@
 import Link from "next/link";
+import type { Metadata } from "next";
+import AccountActions from "@/components/account/AccountActions";
 import { getCurrentUserRow } from "@/lib/v2/auth";
 import { getPlanLimits, getTierFromStatus } from "@/lib/v2/limits";
 import { getUsageSummary } from "@/lib/v2/records";
+
+export const metadata: Metadata = {
+  title: "Account — AP Score Tracker",
+  robots: { index: false, follow: false },
+};
 
 export default async function AccountPage() {
   const user = await getCurrentUserRow();
@@ -77,6 +84,8 @@ export default async function AccountPage() {
             />
           </dl>
         </section>
+
+        <AccountActions />
       </div>
     </main>
   );

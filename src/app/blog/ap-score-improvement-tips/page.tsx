@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     "ap score 3 to 5",
     "ap exam strategies",
   ],
+  alternates: { canonical: "/blog/ap-score-improvement-tips" },
   openGraph: {
     title: "AP Score Improvement Tips — How to Go from 3 to 5",
     description:

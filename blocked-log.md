@@ -2,7 +2,7 @@
 
 | ID | 阶段 | 阻塞 | Owner | 解锁动作 | 状态 |
 |---|---|---|---|---|---|
-| B-01 | QA | 原 Chrome 标签进入 Clerk handshake 循环；匿名生产路由和 Clerk Frontend API 正常，但尚无前台测试账号登录证据 | Weldon | 关闭带 handshake 参数的旧标签，用无痕/全新标签打开 `/sign-in` 登录并保持页面打开；只检查账户删除入口，不执行永久删除 | OPEN |
+| B-01 | QA | 原 Chrome 标签进入 Clerk handshake 循环；匿名生产路由和 Clerk Frontend API 正常，但尚无前台测试账号登录证据 | Weldon | 已配置生产 Google OAuth，并使用 `simidas2017@gmail.com` 完成前台登录、D1/CSV/Account E2E；只检查账户删除入口，未执行永久删除 | RESOLVED 2026-08-07 |
 | B-02 | Compliance | 运营主体与联系邮箱需人工确认 | Weldon | 已确认主体为 Weldon（个人开发者），联系邮箱为 weldonz2026@gmail.com | RESOLVED 2026-08-07 |
 | B-03 | Launch | 本轮提交、推送与生产部署需要 Owner 授权 | Weldon | 已明确授权提交、推送 main 和生产部署 | RESOLVED 2026-08-07 |
 | B-04 | SEO | GSC/Bing 登录态与站点权限尚无证据 | Weldon | 后续配置或登录对应后台；提交前仍需单独确认 | SETUP_REQUIRED |

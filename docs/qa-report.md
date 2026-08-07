@@ -2,7 +2,7 @@
 
 ## 结论
 
-公开页与匿名核心任务本地通过；登录/D1/账户永久删除缺测试登录态，暂为 `CONDITIONAL_GO`，不能给全站 QA_GO。
+公开页、匿名任务和登录态生产核心任务通过，当前免费版结论为 `QA_GO`。账户永久删除只检查入口，按 Owner 限制未执行。
 
 ## 环境
 
@@ -28,20 +28,31 @@
 | Billing off | PASS | subscribe → 503 JSON `FEATURE_DISABLED` |
 | 控制台 | PASS | 无 error；仅本地开发 Key/Plausible localhost 警告 |
 
-## 未测试
+## 登录态生产 E2E
 
-- apscoretracker.com 前台 Clerk 登录、首次 user upsert。当前只确认 Clerk Dashboard 已登录。
-- D1 保存、目标同步、Free 每科 10 条限制。
-- JSON/CSV 实际下载内容。
-- 单条/全部记录删除。
-- 永久账户删除入口与确认机制；按 Owner 限制不执行永久删除。
-- 生产 Plausible 事件。
+| 检查 | 结果 | 证据 |
+|---|---|---|
+| Google OAuth 登录 | PASS | `simidas2017@gmail.com`；首页显示 Tracker、Account 与用户菜单 |
+| D1 创建 | PASS | AP Lang 35/45 + 12/18 → 72%、Estimate 4、Target 4；云端计数 1/10 |
+| 刷新持久化 | PASS | reload 后记录、Target 4、72% 和 QA notes 仍存在 |
+| CSV | PASS | 实际下载 7 列、2 行的 `ap-score-tracker-records.csv` |
+| Account | PASS | 邮箱、Free、使用量和永久删除入口正确 |
+| QA 记录清理 | PASS | 按唯一 ID 和 QA notes 精确删除 1 条；D1 复核数量为 0 |
+| 账户永久删除 | NOT RUN | 仅检查入口，遵守 Owner 禁止执行限制 |
+| Console | PASS | 登录态页面 error 日志为 0 |
+| 原始 network 事件抓取 | PARTIAL | CDP 采集无响应并已停止；保存、刷新、Account 与 D1 结果证明关键请求成功 |
+
+## 未测试 / 上线后观测
+
+- Free 每科第 10/11 条边界限制。
+- JSON 实际下载内容；CSV 已实际下载验证。
+- 生产 Plausible 事件面板。
 
 ## 风险
 
 - P0：无已知本地公开页 P0。
-- P1：缺登录态 E2E；生产部署前必须补。
-- P2：暂无自动化单元测试；当前依赖 lint/build/真实任务验收。
+- P1：无已知当前免费版 P1。
+- P2：暂无自动化单元测试；缺 Free 限额边界、JSON 下载、Plausible/GSC/Bing 证据。
 
 ## Owner 限制
 
@@ -61,9 +72,9 @@
 | unsupported subject | PASS，200 + noindex |
 | 未登录 Account | PASS，307 到 `/sign-in` |
 | 未登录 `/api/me` | PASS，401 JSON |
-| 浏览器 console/network | PARTIAL，发现原 Chrome 标签进入 Clerk handshake 循环；匿名生产访问与 Clerk Frontend API/CORS 正常 |
-| 登录态 D1/CSV/Account | BLOCKED，尚无前台测试账号登录证据 |
+| 浏览器 console/network | Console PASS；关键请求由 UI/D1 结果验证，原始 CDP network 抓取 PARTIAL |
+| 登录态 D1/CSV/Account | PASS；专用 QA 记录已清理，账户永久删除未执行 |
 
 部署版本：`2e73e179-b986-414a-b179-9803295a9094`。
 
-[NEEDS_REVIEW]
+[QA_GO]

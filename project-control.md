@@ -6,13 +6,13 @@
 站点类型：教育工具站
 商业化：当前免费；Pro/Stripe 延后
 当前模式：automation_factory
-当前状态：LIVE_CONDITIONAL
+当前状态：LIVE
 最后更新：2026-08-07
 
 ## Owner 只需要处理
 
 - [x] 已确认运营主体为 Weldon（个人开发者），联系邮箱为 `weldonz2026@gmail.com`。
-- [ ] 在 `apscoretracker.com` 前台登录测试账号，用于完整生产 QA；Clerk Dashboard 登录不等同于前台登录。
+- [x] 已在 `apscoretracker.com` 使用 `simidas2017@gmail.com` 完成前台 Google 登录和生产 QA。
 - [x] 已允许提交、推送 main 与生产部署。
 - [ ] 若要开放 Pro，另行确认 Stripe 产品、税务、退款和生产发布。
 - [ ] GSC/Bing 收录提交及任何公开外链发布前确认。
@@ -34,10 +34,10 @@
 ## 阶段摘要
 
 - done：Research、PRD 基线、Data Contract、核心 Backend、核心 Frontend。
-- running：登录态 QA、最终 Owner Review。
+- running：上线后数据观察。
 - waiting：GSC/Bing、Plausible 真实事件证据、Data Review。
-- blocked：完整登录态 QA；GSC/Bing 为 `setup_required`。
-- done：Compliance Owner Review、提交/推送、生产部署、公开页生产冒烟。
+- blocked：无当前免费版上线阻塞；GSC/Bing 为 `setup_required`。
+- done：Compliance Owner Review、登录态 QA、提交/推送、生产部署、公开页生产冒烟。
 
 ## 本轮验证证据
 
@@ -49,7 +49,11 @@
 - 生产公开页：Home、Tracker、Privacy、Terms、5 个支持科目、2 篇博客、robots、sitemap、OG 均为 200。
 - 生产 SEO：canonical、schema、OG PASS；法律别名 308；unsupported subject noindex。
 - 生产匿名鉴权：`/account` → `/sign-in`；`/api/me` → JSON 401。
-- 生产匿名页面与 Clerk Frontend API/CORS 正常；原 Chrome 标签进入旧 Clerk handshake 循环，仍未取得前台登录态证据。
+- 生产 Google OAuth 登录成功；首页显示 Tracker、Account 和用户菜单，Account 返回 `simidas2017@gmail.com`。
+- D1 E2E：创建专用 AP Lang 记录（35/45、12/18、72%、Estimate 4、Target 4），刷新后仍存在；随后精确删除该 QA 记录并复核数量为 0。
+- CSV 实际下载成功：`ap-score-tracker-records.csv` 为 7 列、2 行（表头 + 1 条 QA 记录）。
+- Account 页面显示 Free、使用量和永久删除入口；未执行账户永久删除。
+- 登录态页面 console error 为 0；CDP 原始 network 事件采集无响应，但保存、读取、Account 和 D1 结果均提供了请求成功证据。
 - 375×812：无横向滚动。
 - 匿名试算：35/45 + 12/18 → 72% / Estimate 4。
 - `/api/me` 未登录：401 JSON。

@@ -15,7 +15,7 @@
 | 07 frontend | DONE | lint、Next build、OpenNext build、公开任务通过 |
 | 10 SEO | CONDITIONAL_GO | 生产 canonical/schema/OG/sitemap/robots 通过；GSC/Bing 仍 setup_required |
 | 02 PM recheck | DONE | 免费云同步范围、Stripe deferred 与禁止动作已确认 |
-| 09 QA | BLOCKED | 公开页 CONDITIONAL_GO；Clerk Dashboard 已登录但缺前台测试账号登录证据 |
-| Owner Review | WAITING | 等登录态生产 E2E 后确认最终 GO |
-| 11 launch | LIVE_CONDITIONAL | commit/push、Cloudflare deploy、GitHub Actions 重跑与公开页生产冒烟完成；登录态 QA、Plausible 证据仍未闭环 |
+| 09 QA | GO | 生产 Google 登录、D1 新建/刷新持久化/精确清理、CSV、Account 和删除入口通过 |
+| Owner Review | GO | 当前免费生产范围已获授权并完成关键 E2E；永久账户删除未执行 |
+| 11 launch | LIVE | commit/push、Cloudflare deploy、GitHub Actions、公开页与登录态生产冒烟完成；Plausible 证据作为上线后观测项 |
 | 12 data review | WAITING | 等新版本上线和数据窗口 |

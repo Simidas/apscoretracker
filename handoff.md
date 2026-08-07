@@ -2,8 +2,8 @@
 
 ## 当前结论
 
-- 状态：[BLOCKED] QA_BLOCKED_AUTH
-- 一句话：免费云同步版已获得提交、推送与生产部署授权；合规 Owner Review 已完成，仍待前台登录态 QA、部署复验与最终 Owner Review。
+- 状态：[BLOCKED] LIVE_CONDITIONAL
+- 一句话：免费云同步版已提交、推送并直接部署生产，公开页冒烟通过；仍待前台登录态 QA、Plausible/GSC/Bing 证据、CI Token 修复与最终 Owner Review。
 
 ## 必须读取
 
@@ -29,15 +29,15 @@
 - 不能把 Clerk Dashboard 登录当作 apscoretracker.com 前台登录证据。
 - 不能假设登录、D1 写入和账户删除入口已在生产验证；账户永久删除不得实际执行。
 - 不能假设 GSC/Bing 已提交。
-- 不能假设本轮修改已 commit/push/deploy。
+- 不能假设 GitHub Actions 已恢复；当前生产部署使用项目现有本地 OpenNext 命令完成。
 - 不能假设 Stripe 可用。
 
 ## 风险
 
-- P0：没有已知本地公开页 P0；生产尚未部署本轮修复。
+- P0：没有已知公开页 P0；生产公开页冒烟已通过。
 - P1：登录/D1/账户删除尚未完成生产 E2E。
 - P2：缺自动化单元测试和 GSC/Bing/分析证据。
 
 ## 下一阶段
 
-Frontend 最终复验 → commit/push/deploy → 生产公开页与登录态 QA → Owner Review → Launch 记录闭环。
+在 `apscoretracker.com` 前台登录测试账号 → D1/CSV/Account E2E（不执行账户永久删除）→ 修复 GitHub Actions Token → Plausible/GSC/Bing → 最终 Owner Review。

@@ -6,7 +6,7 @@
 站点类型：教育工具站
 商业化：当前免费；Pro/Stripe 延后
 当前模式：automation_factory
-当前状态：QA_BLOCKED_AUTH
+当前状态：LIVE_CONDITIONAL
 最后更新：2026-08-07
 
 ## Owner 只需要处理
@@ -26,14 +26,18 @@
 - sitemap、canonical、schema、法律别名、登录跳转已进入本轮返修。
 - GSC/Bing 提交与公开推广未获授权，不在本轮自动执行。
 - 账户永久删除仅检查入口与确认机制，不实际执行。
+- 实现提交 `8d8f8f49c5f2a14ccffc5911b0141a8baee4e913` 已推送 `main`。
+- GitHub Actions run `31140215434`：OpenNext 构建 PASS；Cloudflare 部署因仓库 Token 失效 FAIL。
+- 使用项目现有 OpenNext 部署命令安全回退成功；Worker version `2e73e179-b986-414a-b179-9803295a9094`。
+- 部署 URL：`https://apscoretracker.simidas2017.workers.dev`；生产 URL：`https://apscoretracker.com`。
 
 ## 阶段摘要
 
 - done：Research、PRD 基线、Data Contract、核心 Backend、核心 Frontend。
-- running：登录态 QA、Launch 本地复验。
-- waiting：生产部署复验、Owner Review、GSC/Bing、Data Review。
+- running：登录态 QA、最终 Owner Review。
+- waiting：GSC/Bing、Plausible 真实事件证据、Data Review。
 - blocked：完整登录态 QA；GSC/Bing 为 `setup_required`。
-- done：Compliance Owner Review、生产提交/推送/部署授权。
+- done：Compliance Owner Review、提交/推送、生产部署、公开页生产冒烟。
 
 ## 本轮验证证据
 
@@ -42,6 +46,10 @@
 - 2026-08-07 `npx opennextjs-cloudflare build`：PASS，Worker bundle 已生成。
 - `git diff --check`、data contract JSON 解析、ShipSolo handoff validator：PASS。
 - QA 截图已按真实 JPEG 格式改名为 `.jpg` 并更新文档引用。
+- 生产公开页：Home、Tracker、Privacy、Terms、5 个支持科目、2 篇博客、robots、sitemap、OG 均为 200。
+- 生产 SEO：canonical、schema、OG PASS；法律别名 308；unsupported subject noindex。
+- 生产匿名鉴权：`/account` → `/sign-in`；`/api/me` → JSON 401。
+- 浏览器控制连续超时，未取得 console/network 与前台登录态证据。
 - 375×812：无横向滚动。
 - 匿名试算：35/45 + 12/18 → 72% / Estimate 4。
 - `/api/me` 未登录：401 JSON。

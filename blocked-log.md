@@ -7,5 +7,6 @@
 | B-03 | Launch | 本轮提交、推送与生产部署需要 Owner 授权 | Weldon | 已明确授权提交、推送 main 和生产部署 | RESOLVED 2026-08-07 |
 | B-04 | SEO | GSC/Bing 登录态与站点权限尚无证据 | Weldon | 后续配置或登录对应后台；提交前仍需单独确认 | SETUP_REQUIRED |
 | B-05 | Paid launch | Stripe 产品、Price、Secrets、退款/税务/E2E 缺失 | Weldon | 仅在决定开放 Pro 时恢复该分支 | DEFERRED |
+| B-06 | CI | GitHub Actions 中的 `CLOUDFLARE_API_TOKEN` 已失效；Actions 构建通过但 Secrets 上传返回 Cloudflare 10000/9109 | Weldon | 明确授权后用有效 Token 更新仓库同名 Secret；当前版本已通过项目现有本地部署命令发布 | SETUP_REQUIRED |
 
 不得在聊天中发送 Key、密码、Cookie 或验证码。

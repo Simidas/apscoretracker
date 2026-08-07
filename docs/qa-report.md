@@ -49,4 +49,21 @@
 - 不允许未经单独确认执行账户永久删除、公开发帖或付费推广。
 - GSC/Bing 尚无真实提交证据，保持 `setup_required`。
 
+## 生产冒烟 — 2026-08-07
+
+| 检查 | 结果 |
+|---|---|
+| Home、Tracker、Privacy、Terms | PASS，200 |
+| 5 个支持科目、2 篇博客 | PASS，200 |
+| robots、sitemap、OG image | PASS，200 |
+| canonical、WebApplication/FAQ schema、OG | PASS |
+| Privacy/Terms 旧别名 | PASS，308 |
+| unsupported subject | PASS，200 + noindex |
+| 未登录 Account | PASS，307 到 `/sign-in` |
+| 未登录 `/api/me` | PASS，401 JSON |
+| 浏览器 console/network | BLOCKED，Chrome 与应用内浏览器控制均连续超时 |
+| 登录态 D1/CSV/Account | BLOCKED，尚无前台测试账号登录证据 |
+
+部署版本：`2e73e179-b986-414a-b179-9803295a9094`。
+
 [NEEDS_REVIEW]

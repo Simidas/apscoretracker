@@ -3,7 +3,7 @@
 ## 当前结论
 
 - 状态：[BLOCKED] LIVE_CONDITIONAL
-- 一句话：免费云同步版已提交、推送并直接部署生产，公开页冒烟通过；仍待前台登录态 QA、Plausible/GSC/Bing 证据、CI Token 修复与最终 Owner Review。
+- 一句话：免费云同步版已提交、推送并部署生产，GitHub Actions 已恢复且公开页冒烟通过；仍待清理旧 Clerk handshake 会话后的前台登录态 QA、Plausible/GSC/Bing 证据与最终 Owner Review。
 
 ## 必须读取
 
@@ -29,7 +29,7 @@
 - 不能把 Clerk Dashboard 登录当作 apscoretracker.com 前台登录证据。
 - 不能假设登录、D1 写入和账户删除入口已在生产验证；账户永久删除不得实际执行。
 - 不能假设 GSC/Bing 已提交。
-- 不能假设 GitHub Actions 已恢复；当前生产部署使用项目现有本地 OpenNext 命令完成。
+- GitHub Actions 已恢复；原 Chrome 标签的 Clerk handshake 循环尚未完成全新会话复验。
 - 不能假设 Stripe 可用。
 
 ## 风险
@@ -40,4 +40,4 @@
 
 ## 下一阶段
 
-在 `apscoretracker.com` 前台登录测试账号 → D1/CSV/Account E2E（不执行账户永久删除）→ 修复 GitHub Actions Token → Plausible/GSC/Bing → 最终 Owner Review。
+关闭旧 handshake 标签并用全新会话登录 `apscoretracker.com` → D1/CSV/Account E2E（不执行账户永久删除）→ Plausible/GSC/Bing → 最终 Owner Review。

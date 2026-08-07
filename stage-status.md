@@ -17,5 +17,5 @@
 | 02 PM recheck | DONE | 免费云同步范围、Stripe deferred 与禁止动作已确认 |
 | 09 QA | BLOCKED | 公开页 CONDITIONAL_GO；Clerk Dashboard 已登录但缺前台测试账号登录证据 |
 | Owner Review | WAITING | 等登录态生产 E2E 后确认最终 GO |
-| 11 launch | LIVE_CONDITIONAL | commit/push/直接 Cloudflare deploy 与公开页生产冒烟完成；CI Token、登录态 QA、Plausible 证据仍未闭环 |
+| 11 launch | LIVE_CONDITIONAL | commit/push、Cloudflare deploy、GitHub Actions 重跑与公开页生产冒烟完成；登录态 QA、Plausible 证据仍未闭环 |
 | 12 data review | WAITING | 等新版本上线和数据窗口 |

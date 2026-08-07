@@ -27,7 +27,7 @@
 - GSC/Bing 提交与公开推广未获授权，不在本轮自动执行。
 - 账户永久删除仅检查入口与确认机制，不实际执行。
 - 实现提交 `8d8f8f49c5f2a14ccffc5911b0141a8baee4e913` 已推送 `main`。
-- GitHub Actions run `31140215434`：OpenNext 构建 PASS；Cloudflare 部署因仓库 Token 失效 FAIL。
+- GitHub Actions run `31140215434`：首次因仓库 Cloudflare Token 失效失败；更新 Secret 后重跑 OpenNext 构建与 Cloudflare 部署均 PASS。
 - 使用项目现有 OpenNext 部署命令安全回退成功；Worker version `2e73e179-b986-414a-b179-9803295a9094`。
 - 部署 URL：`https://apscoretracker.simidas2017.workers.dev`；生产 URL：`https://apscoretracker.com`。
 
@@ -49,7 +49,7 @@
 - 生产公开页：Home、Tracker、Privacy、Terms、5 个支持科目、2 篇博客、robots、sitemap、OG 均为 200。
 - 生产 SEO：canonical、schema、OG PASS；法律别名 308；unsupported subject noindex。
 - 生产匿名鉴权：`/account` → `/sign-in`；`/api/me` → JSON 401。
-- 浏览器控制连续超时，未取得 console/network 与前台登录态证据。
+- 生产匿名页面与 Clerk Frontend API/CORS 正常；原 Chrome 标签进入旧 Clerk handshake 循环，仍未取得前台登录态证据。
 - 375×812：无横向滚动。
 - 匿名试算：35/45 + 12/18 → 72% / Estimate 4。
 - `/api/me` 未登录：401 JSON。

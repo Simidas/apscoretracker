@@ -20,10 +20,10 @@
 
 - branch：`main`
 - implementation commit：`8d8f8f49c5f2a14ccffc5911b0141a8baee4e913`
-- GitHub Actions：run `31140215434`，构建通过，仓库 Cloudflare Token 失效导致部署失败
+- GitHub Actions：run `31140215434`，更新仓库 Cloudflare Secret 后重跑构建与部署均通过
 - deploy fallback：项目现有 OpenNext deploy 命令，PASS
 - Worker version：`2e73e179-b986-414a-b179-9803295a9094`
 - deploy URL：`https://apscoretracker.simidas2017.workers.dev`
 - production URL：`https://apscoretracker.com`
 - 公开页/SEO/匿名鉴权 smoke：PASS
-- 浏览器 console/network、登录态 E2E：BLOCKED
+- 浏览器登录态 E2E：BLOCKED，原 Chrome 标签出现旧 Clerk handshake 循环；匿名生产访问与 Clerk Frontend API/CORS 正常

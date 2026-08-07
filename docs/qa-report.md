@@ -61,7 +61,7 @@
 | unsupported subject | PASS，200 + noindex |
 | 未登录 Account | PASS，307 到 `/sign-in` |
 | 未登录 `/api/me` | PASS，401 JSON |
-| 浏览器 console/network | BLOCKED，Chrome 与应用内浏览器控制均连续超时 |
+| 浏览器 console/network | PARTIAL，发现原 Chrome 标签进入 Clerk handshake 循环；匿名生产访问与 Clerk Frontend API/CORS 正常 |
 | 登录态 D1/CSV/Account | BLOCKED，尚无前台测试账号登录证据 |
 
 部署版本：`2e73e179-b986-414a-b179-9803295a9094`。
